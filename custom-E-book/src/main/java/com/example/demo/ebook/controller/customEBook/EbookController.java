@@ -45,17 +45,7 @@ public class EbookController {
 		map.addAttribute("size", list.size());
 		return "Cart";
 	}
-	/*
-	 * @RequestMapping(value = "/showEbookContent", method = RequestMethod.POST)
-	 * public String ShowContent(ModelMap map,HttpSession
-	 * session,@RequestParam("chapters")List<Chapter>chapters,@RequestParam(
-	 * "ebookid")ebookid) { if(session.getAttribute("id")==null) { return
-	 * "redirect:loginBuyerPublisher"; } Buyer buyer=(Buyer)
-	 * session.getAttribute("buyer"); CustomEbook
-	 * result=service.customizeContent(buyer,chapters,ebookid);
-	 * map.addAttribute("result","custom ebook created with id "+result.getEbookId()
-	 * ); return "successRegistration"; }
-	 */
+	
 	@RequestMapping(value = "/searchResult", method = RequestMethod.POST)
 	public String searchResult(@RequestParam("keywords") String keywords, ModelMap map) {
 		List<Book> books = service.getBooks(keywords);
@@ -75,6 +65,7 @@ public class EbookController {
 		int save = service.saveEBook(bookIdList, chapterIdList, buyer);
 		return "redirect:showEbookContent";
 	}
+	
 	@RequestMapping(value = "/deletechapter/{id}")
 	public String DeleteContent(@PathVariable(value="id") int id,HttpSession session)
 	{if(session.getAttribute("id")==null) {
@@ -150,7 +141,6 @@ public class EbookController {
 		if (buyer == null)
 			return "redirect:loginBuyerPublisher";
 		String filename="/home/samridhi/mid.pdf";
-		//List<CustomEBook> list=service.showContent(buyer);
 		SendEmail s=new SendEmail(price,filename);
 		service.deleteContentAfterSave(buyer);
 		map.addAttribute("result", "sent!");
