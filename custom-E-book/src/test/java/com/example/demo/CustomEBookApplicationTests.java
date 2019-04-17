@@ -107,7 +107,7 @@ public class CustomEBookApplicationTests {
 	*/
 
 	
-	@Test
+	//@Test
 	public void preview() throws IOException {
 		ChapterService service = context.getBean(ChapterService.class);
 		int startPage = 1;
@@ -116,7 +116,15 @@ public class CustomEBookApplicationTests {
 		String dest = System.getProperty("user.dir")+ "/src/main/resources/static/images/temp/start_preview_1";
 		System.out.println(System.getProperty("user.dir"));
 
-		service.cutPdf(startPage, endPage, source, dest, true);
+		service.cutPdf(startPage, endPage, source, dest, true, true);
+	}
+	
+	@Test
+	public void previewChapter() {
+		ChapterService service = context.getBean(ChapterService.class);
+		String loc = "/home/shreyansh/ebooks/publisher_5/book_25/chap_3.pdf";
+		String previewChapter = service.previewChapter(loc);
+		System.out.println(previewChapter);
 	}
 
 

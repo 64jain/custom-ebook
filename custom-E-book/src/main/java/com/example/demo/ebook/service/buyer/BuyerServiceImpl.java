@@ -1,5 +1,7 @@
 package com.example.demo.ebook.service.buyer;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,14 @@ public class BuyerServiceImpl implements BuyerService {
 				return null;
 			}
 		}
+	}
+
+	@Override
+	public List<File> buyerMyOrders(Buyer buyer) {
+		String path = System.getProperty("user.home")+"/ebooks/buyer_"+buyer.getId()+"/Books";
+		File[] files = new File(path).listFiles();
+		List<File> files_list = Arrays.asList(files);
+		System.out.println(files_list.get(0));
+		return files_list;
 	}
 }

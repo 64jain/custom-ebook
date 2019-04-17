@@ -1,5 +1,6 @@
 package com.example.demo.ebook.controller.book;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -46,6 +47,13 @@ public class BookController {
 		if (session.getAttribute("id") == null || session.getAttribute("publisher")==null) {
 			return "redirect:loginBuyerPublisher";
 		} else {
+			String temp_loc = System.getProperty("user.dir")+ "/src/main/resources/static/images/temp";
+			File index = new File(temp_loc);
+			String[]entries = index.list();
+			for(String s: entries){
+			    File currentFile = new File(index.getPath(),s);
+			    currentFile.delete();
+			}
 			Publisher publisher =(Publisher) session.getAttribute("publisher");
 			List<Book> publisherBooks = service.getPublisherBooks(publisher);
 			//System.out.println(publisherBooks.get(0).getBookName());

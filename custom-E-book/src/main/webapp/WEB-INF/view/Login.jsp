@@ -60,7 +60,7 @@ body {
 /* Create three unequal columns that floats next to each other */
 .column {
   float: left;
-  padding: 10px;
+ 
 }
 
 /* Left and right column */
@@ -90,17 +90,32 @@ body {
     </style>
 </head>
 <body>
- <div class="topnav">
-  <a href="/">Home</a>
-    <a href="/regBuyerPublisher">Register</a>
-</div>
+<!-- Navigation bar -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/loginBuyerPublisher">Login</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/regBuyerPublisher">Register</a></li>
+				<li><a href="/about">About</a></li>
+			</ul>
+			
+		</div>
+	</nav>
+	<!---------- end ----------------->
+<!--  <div class="topnav"> -->
+<!--   <a href="/">Home</a> -->
+<!--     <a href="/regBuyerPublisher">Register</a> -->
+<!-- </div> -->
 
-<div class="header">
-<div id="headerimg"  style="background-image:url(/images/login1.jpg);height:290px; background-repeat:no-repeat;object-fit:cover;padding-top:-16px;margin-top:-16px;padding-bottom:-16px;margin-bottom:-16px;padding-left:-16px;margin-left:-16px;padding-right:-16px;margin-right:-16px;">
- </div>
+<!-- <div class="header"> -->
+<!-- <div id="headerimg"  style="background-image:url(/images/login1.jpg);height:290px; background-repeat:no-repeat;object-fit:cover;padding-top:-16px;margin-top:-16px;padding-bottom:-16px;margin-bottom:-16px;padding-left:-16px;margin-left:-16px;padding-right:-16px;margin-right:-16px;"> -->
+<!--  </div> -->
 
 <div class="row">
-  <div class="column side">
+  <div class="column side" style="padding-left:1.8%;">
     <h2>Login as Buyer</h2>
     <p>Login into the website,see and make use of respective books or chapters of your interest!</p>
      <button type="button" class="btn btn-info" id="myBtn1">Login Buyer</button>
@@ -111,7 +126,7 @@ body {
   </div>
   </div>
   
-  <div class="column side">
+  <div class="column side" style="padding-left:0.5%;padding-right:1%;">
     <h2>Login as Publisher</h2>
     <p>After login,you can sell your own book and make money out of it!</p>
   <button type="button" class="btn btn-info" id="myBtn2">Login Publisher</button>

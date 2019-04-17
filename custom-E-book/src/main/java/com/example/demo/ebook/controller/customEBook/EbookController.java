@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
 import com.example.demo.ebook.service.customEBook.EbookService;
 import com.example.demo.ebook.service.customEBook.SendEmail;
+
 
 @Controller
 public class EbookController {
@@ -45,9 +47,21 @@ public class EbookController {
 		map.addAttribute("size", list.size());
 		return "Cart";
 	}
-	
-	@RequestMapping(value = "/searchResult", method = RequestMethod.POST)
+	/*
+	 * @RequestMapping(value = "/showEbookContent", method = RequestMethod.POST)
+	 * public String ShowContent(ModelMap map,HttpSession
+	 * session,@RequestParam("chapters")List<Chapter>chapters,@RequestParam(
+	 * "ebookid")ebookid) { if(session.getAttribute("id")==null) { return
+	 * "redirect:loginBuyerPublisher"; } Buyer buyer=(Buyer)
+	 * session.getAttribute("buyer"); CustomEbook
+	 * result=service.customizeContent(buyer,chapters,ebookid);
+	 * map.addAttribute("result","custom ebook created with id "+result.getEbookId()
+	 * ); return "successRegistration"; }
+	 */
+	@RequestMapping(value = "/searchResult")
 	public String searchResult(@RequestParam("keywords") String keywords, ModelMap map) {
+		if(keywords=="")
+			return "buyHome";
 		List<Book> books = service.getBooks(keywords);
 		List<Chapter> chapters = service.getChapters(keywords);
 		if (books != null)
@@ -62,10 +76,11 @@ public class EbookController {
 	public String addToCart(@RequestParam(value = "bookIdList", required = false) List<Integer> bookIdList,
 			@RequestParam(value = "chapterIdList",required=false) List<Integer> chapterIdList, ModelMap map, HttpSession session) {
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
 		int save = service.saveEBook(bookIdList, chapterIdList, buyer);
 		return "redirect:showEbookContent";
 	}
-	
 	@RequestMapping(value = "/deletechapter/{id}")
 	public String DeleteContent(@PathVariable(value="id") int id,HttpSession session)
 	{if(session.getAttribute("id")==null) {
@@ -121,29 +136,92 @@ public class EbookController {
 			return "redirect:loginBuyerPublisher";
 		List<CustomEBook> list=service.showContent(buyer);
 		double total=0;
+		@SuppressWarnings("unused")
+		int totalPages=0;
 		for(int i=0;i<list.size();i++)
 		{
 			if(list.get(i).getChapter()==null)
+			{
 				total+=list.get(i).getBook().getPrice();
+				totalPages+=list.get(i).getBook().getTotalNoOfPages();
+			}
 			else
+			{
 				total+=list.get(i).getChapter().getPrice();
+				totalPages+=(list.get(i).getChapter().getEndPage()-list.get(i).getChapter().getStartPage() +1);
+			}
 		}
+		double hardCopyPrice = total+totalPages*0.5 +30;
+		service.mergePdf(buyer, true);    //for creating ebook preview
 		map.addAttribute("price", total);
+		map.addAttribute("hardCopyPrice", hardCopyPrice);
 		return "Payment";
 	}
-	@RequestMapping(value ="/buy")
-	public String Buy(ModelMap map,HttpSession session,@RequestParam("price")String price)
+	@RequestMapping("/paymentPage")
+	public String paymentPage(ModelMap map,HttpSession session,@RequestParam( value="price",required=false) String price,
+								@RequestParam(value="hardCopyPrice",required=false) String hardCopyPrice)
 	{
-		if (session.getAttribute("id") == null) {
-			return "redirect:loginBuyerPublisher";
-		}
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
-		if (buyer == null)
+		if(buyer==null)
 			return "redirect:loginBuyerPublisher";
-		String filename="/home/samridhi/mid.pdf";
-		SendEmail s=new SendEmail(price,filename);
+		if(price!=null)
+		{
+			map.addAttribute("price",price);
+			map.addAttribute("hardCopyPrice",hardCopyPrice);
+			System.out.println(hardCopyPrice);	
+			System.out.println(price);
+		}
+		map.addAttribute(buyer);
+		//map.addAttribute("hardCopyPrice",hardCopyPrice);
+		return "paymentPage";
+	}
+	
+	@RequestMapping("/successPayment")
+	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("paymentMethod")String paymentMethod)
+	{
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
+		
+		System.out.println("********************************************************");
+		System.out.println(email);
+		System.out.println(name);
+		System.out.println(price);
+		System.out.println(addr);
+		System.out.println(copy_type);
+		System.out.println(paymentMethod);
+		System.out.println("********************************************************");
+		service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
+		service.mergePdf(buyer,false);
+		//String filename="/home/samridhi/mid.pdf";
+		//SendEmail s=new SendEmail(price,filename);
 		service.deleteContentAfterSave(buyer);
-		map.addAttribute("result", "sent!");
-		return "successRegistration";
+		map.addAttribute("result", "Email has been sent to the recipient email address!");
+		return "successPayment";
+	}
+//	@RequestMapping(value ="/buy")
+//	public String Buy(ModelMap map,HttpSession session,@RequestParam("price")String price)
+//	{
+//		if (session.getAttribute("id") == null) {
+//			return "redirect:loginBuyerPublisher";
+//		}
+//		Buyer buyer = (Buyer) session.getAttribute("buyer");
+//		if (buyer == null)
+//			return "redirect:loginBuyerPublisher";
+//		String filename="/home/samridhi/mid.pdf";
+//		//List<CustomEBook> list=service.showContent(buyer);
+//		SendEmail s=new SendEmail(price,filename);
+//		service.deleteContentAfterSave(buyer);
+//		map.addAttribute("result", "Email has been sent to the recipient email address!");
+//		return "successRegistration";
+//	}
+
+
+	@RequestMapping("/combinePdf")
+	public String combinePdf(HttpSession session)
+	{
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		service.mergePdf(buyer,true);
+		return "redirect:buyHome";
 	}
 }

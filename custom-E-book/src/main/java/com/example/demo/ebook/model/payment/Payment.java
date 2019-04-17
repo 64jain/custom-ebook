@@ -1,13 +1,21 @@
 package com.example.demo.ebook.model.payment;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.example.demo.ebook.model.buyer.Buyer;
 @Entity
 public class Payment {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int buyerid;
-	private int ebookid;
-	private boolean copy_type;
+	private String name;
+	private String email;
+	private String buyer_addr;
+	@ManyToOne
+	private Buyer buyer;
+	private boolean hardCopy;
 	private double price;
 	private String payment_method;
 	
@@ -17,23 +25,37 @@ public class Payment {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getBuyerid() {
-		return buyerid;
+	public String getBuyer_addr() {
+		return buyer_addr;
 	}
-	public void setBuyerid(int buyerid) {
-		this.buyerid = buyerid;
+	public void setBuyer_addr(String buyer_addr) {
+		this.buyer_addr = buyer_addr;
 	}
-	public int getEbookid() {
-		return ebookid;
+	
+	public String getName() {
+		return name;
 	}
-	public void setEbookid(int ebookid) {
-		this.ebookid = ebookid;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public boolean isCopy_type() {
-		return copy_type;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void setCopy_type(boolean copy_type) {
-		this.copy_type = copy_type;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Buyer getBuyer() {
+		return buyer;
+	}
+	public void setBuyer(Buyer buyer) {
+		this.buyer = buyer;
+	}
+	public boolean isHardCopy() {
+		return hardCopy;
+	}
+	public void setHardCopy(boolean hardCopy) {
+		this.hardCopy = hardCopy;
 	}
 	public double getPrice() {
 		return price;
@@ -47,5 +69,11 @@ public class Payment {
 	public void setPayment_method(String payment_method) {
 		this.payment_method = payment_method;
 	}
+	@Override
+	public String toString() {
+		return "Payment [id=" + id + ", name=" + name + ", email=" + email + ", buyer_addr=" + buyer_addr + ", buyer="
+				+ buyer + ", hardCopy=" + hardCopy + ", price=" + price + ", payment_method=" + payment_method + "]";
+	}
+	
 	
 }

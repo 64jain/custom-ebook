@@ -76,7 +76,7 @@ body{
 		<div class="container">
 			<table align="center" class="table ">
 				<caption>
-					<h3 style="font-family:Georgia;"><b>UPLOADED BOOKS</b></h3>
+					<b><h3 style="font-family:Georgia;">UPLOADED BOOKS</h3></b>
 				</caption>
 				<thead>
 					<tr class="tr tr-success">
@@ -88,6 +88,7 @@ body{
 							</div></td>
 						<td><div class="card" style="background-color: black;">
 								<font color="white"><b>Price Price</b></font>
+								<font color="white"><b>Price</b></font>
 							</div></td>
 						<td><div class="card" style="background-color: black;">
 								<font color="white"><b>Chapters Configured</b></font>

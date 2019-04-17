@@ -82,7 +82,6 @@
 			<artifactId>spring-session-jdbc</artifactId>
 		</dependency>
 
-		
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -131,11 +130,17 @@
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
+			<groupId>net.sf.cssbox</groupId>
+			<artifactId>pdf2dom</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 	</dependencies>
-
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		
 	<build>
 		<plugins>
 			<plugin>

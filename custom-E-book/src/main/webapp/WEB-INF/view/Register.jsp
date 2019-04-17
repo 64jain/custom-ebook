@@ -101,16 +101,30 @@ body {
     </style>
 </head>
 <body>
-
-<div class="topnav">
-  <a href="/">Home</a>
- <a href="/loginBuyerPublisher">Login</a>
-</div>
-<div class="header">
-<div id="headerimg"  style="background-image:url(/images/reg2.jpg);height:235px; background-repeat:no-repeat;object-fit:cover;padding-top:-16px;margin-top:-16px;padding-bottom:-16px;margin-bottom:-16px;padding-left:-16px;margin-left:-16px;padding-right:-16px;margin-right:-16px;">
- </div>
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/regBuyerPublisher">Register</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/loginBuyerPublisher">Login</a></li>
+				<li><a href="/about">About</a></li>
+			</ul>
+			
+		</div>
+	</nav>
+	<!---------- end ----------------->
+<!-- <div class="topnav"> -->
+<!--   <a href="/">Home</a> -->
+<!--  <a href="/loginBuyerPublisher">Login</a> -->
+<!-- </div> -->
+<!-- <div class="header"> -->
+<!-- <div id="headerimg"  style="background-image:url(/images/reg2.jpg);height:235px; background-repeat:no-repeat;object-fit:cover;padding-top:-16px;margin-top:-16px;padding-bottom:-16px;margin-bottom:-16px;padding-left:-16px;margin-left:-16px;padding-right:-16px;margin-right:-16px;"> -->
+<!--  </div> -->
   
-</div>
+<!-- </div> -->
 
 
 <div class="row">

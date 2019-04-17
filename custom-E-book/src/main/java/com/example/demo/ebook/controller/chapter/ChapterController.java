@@ -2,6 +2,7 @@ package com.example.demo.ebook.controller.chapter;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,10 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,8 +55,8 @@ public class ChapterController {
 		else {
 			String loc_start = System.getProperty("user.dir")+ "/src/main/resources/static/images/temp/start_preview_"+id;
 			String loc_end = System.getProperty("user.dir")+ "/src/main/resources/static/images/temp/end_preview_"+id;
-			service.cutPdf(startPage, startPage, source, loc_start, true);
-			service.cutPdf(endPage, endPage, source, loc_end, true);
+			service.cutPdf(startPage, startPage, source, loc_start, true,false);
+			service.cutPdf(endPage, endPage, source, loc_end, true,false);
 			return "";
 		}
 		
@@ -100,7 +105,7 @@ public class ChapterController {
 		
 		int id = Integer.parseInt(params.get("bookId"));
 		Book book = bookService.getBookById(id);
-		book.setChaptersAdded(true);
+		
 		bookService.update(book);
 		// System.out.println(book);
 		ArrayList<String> chapNames = new ArrayList<String>();
@@ -125,9 +130,26 @@ public class ChapterController {
 		System.out.println(chapStartPage);
 		System.out.println(chapEndPage);
 		service.saveChapters(chapNames, chapKeywords, chapDescription, chapPrice, chapStartPage, chapEndPage, book);
+		book.setChaptersAdded(true);
 		return "redirect:pubHome";
 	}
+	
+	@RequestMapping(value="/getpdf1", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> getPDF1(@RequestParam("id") int id ) throws IOException {
 
+		Chapter chapter = service.getChapterById(id);
+	    HttpHeaders headers = new HttpHeaders();
+
+	    headers.setContentType(MediaType.parseMediaType("application/pdf"));
+	    String filename = chapter.getLoc().substring(0, chapter.getLoc().length()-4)+"_preview.pdf";
+	    File file = new File(filename);
+	    byte[] pdf1Bytes = Files.readAllBytes(file.toPath());
+	    headers.add("content-disposition", "inline;filename=" + filename);
+
+	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);
+	    return response;
+	}
 	
 	@RequestMapping("previewBuyerChapter")
 	public String previewBuyerBook(@RequestParam("id") int id, ModelMap map, HttpSession session) {
@@ -136,6 +158,7 @@ public class ChapterController {
 		}
 		else {
 			Chapter chapter = service.getChapterById(id);
+			
 			map.addAttribute("chapter", chapter);
 			return "previewBuyerChapter";
 		}

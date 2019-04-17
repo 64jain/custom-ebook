@@ -1,8 +1,12 @@
 package com.example.demo.ebook.controller.buyer;
 
+import java.io.File;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.service.buyer.BuyerService;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 public class BuyerController {
@@ -49,4 +54,13 @@ public class BuyerController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	@RequestMapping("/myOrders")
+	public String myOrders(ModelMap map,HttpSession session) {
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		List<File> files_list = service.buyerMyOrders(buyer);
+		if(files_list!=null)
+			map.addAttribute("files_list", files_list);
+		return "myOrders";
+	}
+	
 }

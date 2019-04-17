@@ -45,11 +45,26 @@ body{
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 </style>
 <script>
 	$(document).ready(function(){
 		$(":button").click(function() {
 			var id = $(this).attr('id');
+			$("#spin_"+id).show();
 			var startPage = $("#start_page_"+id).val();
 			var endPage = $("#end_page_"+id).val();
 			var totalPages = $("#totalNoOfPages").val();
@@ -66,7 +81,7 @@ body{
 //  				}
 			});
 			$("#spin_"+id).show();
-			var delayInMilliseconds = 7000; //1 second
+			var delayInMilliseconds = 9000; //1 second
 
 			setTimeout(function() {
 				$("#start_img_"+id).attr('src', "/images/temp/start_preview_"+id+".jpg")
@@ -75,13 +90,28 @@ body{
 				$("#start_img_"+id).show();
 				$("#end_img_"+id).load(location.href + " #end_img_"+id);
 				$("#end_img_"+id).show();
+				$("#spin_"+id).hide();
 			}, delayInMilliseconds);
-			$("#spin_"+id).hide();
+			
 			
 // 			alert("id = "+id + " start page = "+startPage+" endPage = "+endPage);
 		});
 	});
+	
+	$(document).ready(function() {
+  $("#scroll").click(function(e)  {
+var i=e+1;
+var div="div_i";
+    e.preventDefault();
+
+    $("body, html").animate({ 
+      scrollTop: $( $(#div).offset().top 
+    }, 600);
+
+  });
+});
 </script>
+
 </head>
 <body>
 <!---------------------NavBar opening -------------------------->
@@ -112,7 +142,7 @@ body{
 			<input type="text" id="bookLoc" name="bookLoc" value="${book.bookLoc}" hidden="true"/>
 		<c:forEach var="i" begin="1" end="${book.noOfChapters}">
 		
-		<div class="jumbotron jumbotron-fluid">
+		<div class="jumbotron jumbotron-fluid" id="div_${i}">
 			<h3><b>Chapter ${i} </b></h3>
 			  <div class="row">
 					<div class="col-sm-4 card" style="background-color: lavender;">
@@ -165,34 +195,19 @@ body{
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="number" min="1" max="${book.totalNoOfPages}"
-				ame="end_page_${i}" id="end_page_${i}"
+				name="end_page_${i}" id="end_page_${i}"
 							style="font-size: 12pt; height: 40px; width: 280px;" />
 					</div>
 				</div> 
 				<br> <button type="button" id="${i}">preview</button> <br>
-				<span class="spinner-border" id="spin_${i}" ></span>
+				<div  class="loader" id="spin_${i}" hidden="true"></div>
 			<img src="" hidden="true" id="start_img_${i}" height="200" width="150">
 			<img src="" hidden="true" id="end_img_${i}" height="200" width="150">
 			<br>
-		
-				<!-- <br><label for="name_${i}"> Name of the chapter</label><input type="text" name="name_${i}">
-			<br><label for="price_${i}"> Price</label><input type="number" name="price_${i}" min="0">
-			<br><label for="description_${i}"> Description of the chapter</label> <br><textarea rows="4" cols="50" name="description_${i}"></textarea>
-			<br><label for="keywords_${i}"> Keywords (space separated)</label> <input type="text" name="keywords_${i}">
-			<label for="start_page_${i}">Start page</label>
-			<input type="number" min="1" max="${book.totalNoOfPages}"
-				name="start_page_${i}" id="start_page_${i}">
-			
-			<label for="end_page_${i}">End page</label>
-			<input type="number" min="1" max="${book.totalNoOfPages}"
-				name="end_page_${i}" id="end_page_${i}">
-			<br> <button type="button" id="${i}">preview</button> <br>
-			<img src="" hidden="true" id="start_img_${i}" height="200" width="150">
-			<img src="" hidden="true" id="end_img_${i}" height="200" width="150">
-			<br>  -->
 			<br>
 			
 			</div>
+			<button type="button" id="button_${i}" onclick="scrollDown(${i})"></button>
 		</c:forEach>
 		
 		<input class="button button2" type="submit" value="configure chapters">

@@ -1,5 +1,7 @@
 package com.example.demo.ebook.controller.def;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +16,10 @@ public class DefaultController {
 	public String test() {
 		return "index";
 	}
-
+	@RequestMapping("/about")
+	public String about() {
+		return "about";
+	}
 //	@RequestMapping("regBuyer")
 //	public String regBuyer() {
 //		return "regBuyer";
@@ -32,6 +37,7 @@ public class DefaultController {
 
 	@RequestMapping("loginBuyerPublisher")
 	public String loginBuyerPublisher(ModelMap map, HttpServletRequest request) {
+		
 		HttpSession session = request.getSession(false);
 		if (session.getAttribute("id") != null) {
 			if(session.getAttribute("publisher")!=null) {
@@ -41,6 +47,7 @@ public class DefaultController {
 				return "redirect:buyHome";
 			}
 		}
+		
 		map.addAttribute("error", "");
 		return "Login";
 	}

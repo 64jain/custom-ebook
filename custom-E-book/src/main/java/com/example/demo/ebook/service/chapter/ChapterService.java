@@ -15,7 +15,7 @@ public interface ChapterService {
 			ArrayList<Integer> price, ArrayList<Integer> startPage, ArrayList<Integer> endPage, Book book)
 			throws IOException;
 
-	String cutPdf(int startPage, int endPage, String source, String dest, boolean flag) throws IOException;
+	String cutPdf(int startPage, int endPage, String source, String dest, boolean image_flag, boolean chapter_preview_flag) throws IOException;
 
 	List<Chapter> getChaptersByBook(Book book);
 
@@ -23,4 +23,6 @@ public interface ChapterService {
 	Chapter getChapterById(int id);
 
 	List<Chapter> getChapterByBookId(Book book);
+	
+	String previewChapter(String loc);
 }
