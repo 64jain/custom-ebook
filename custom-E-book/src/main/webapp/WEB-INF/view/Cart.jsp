@@ -59,19 +59,23 @@ $(document).ready(function(){
 });
 function deletedata(id)
 {
-	$.ajax({ type :'POST',
-		contentType :"application/json",
-		url:"deletechapter/"+id,
-		success: function(data)
-		{
+	var confir = confirm("Are you sure you want to remove item from cart?");
+	if(confir==true) {
+		$.ajax({ type :'POST',
+			contentType :"application/json",
+			url:"deletechapter/"+id,
+			success: function(data)
+			{
+				
+			},
+			error: function(data)
+			{
+				
+			}
 			
-		},
-		error: function(data)
-		{
-			
-		}
-		
-	});
+		});	
+	}
+	
 }
 </script>
 
@@ -188,8 +192,8 @@ function deletedata(id)
 		<br>
 		<br/>
 		<br/>
-		<input type="text" id="tex" name="sequence_string"/>
-		<button class="button button2" style="background-color:#4682B4;"type="submit">Save</button>
+		<input type="text" id="tex" name="sequence_string" hidden/>
+		<button class="button button2" style="background-color:#4682B4;"type="submit">Save Sequence</button>
 	
 	</form>
 	

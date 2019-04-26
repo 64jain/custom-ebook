@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
@@ -102,5 +103,11 @@ public class BuyerController {
 	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);
 	    return response;
+	}
+	
+	@RequestMapping("buyerLoginExist")
+	public @ResponseBody boolean buyerLoginExist( @RequestParam("login") String login) {
+		boolean loginExists = service.checkLoginExists(login);
+		return loginExists;
 	}
 }

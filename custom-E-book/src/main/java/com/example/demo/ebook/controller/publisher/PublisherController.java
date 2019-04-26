@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.ebook.model.publisher.Publisher;
 import com.example.demo.ebook.service.book.BookService;
@@ -65,6 +66,12 @@ public class PublisherController {
 		session.invalidate();
 		System.out.println(" INFO : logging out");
 		return "redirect:/";
+	}
+	
+	@RequestMapping("publisherLoginExist")
+	public @ResponseBody boolean publisherLoginExist( @RequestParam("login") String login) {
+		boolean loginExists = service.checkLoginExists(login);
+		return loginExists;
 	}
 
 }

@@ -11,4 +11,5 @@ public interface BuyerService {
 	Buyer validateBuyer(String loginId, String password);
 	List<File> buyerMyOrders(Buyer buyer);
 	List<Payment> buyerPayments(Buyer buyer);
+	boolean checkLoginExists(String login);
 }

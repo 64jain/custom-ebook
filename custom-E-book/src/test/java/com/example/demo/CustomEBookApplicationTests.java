@@ -35,7 +35,7 @@ public class CustomEBookApplicationTests {
 
 	@Autowired
 	ApplicationContext context;
-	@Test
+	//@Test
 	public void saveBuyer() {
 		BuyerRepository repository = context.getBean(BuyerRepository.class);
 		BuyerService service = context.getBean(BuyerService.class);
@@ -48,7 +48,7 @@ public class CustomEBookApplicationTests {
 		System.out.println("TEST : buyer saving into db");
 		//repository.save(buyer);
 	}
-	@Test
+	//@Test
 	public void savePublisher() {
 		PublisherRepository repository = context.getBean(PublisherRepository.class);
 //		BuyerService service = context.getBean(BuyerService.class);
@@ -62,13 +62,13 @@ public class CustomEBookApplicationTests {
 		System.out.println("TEST : publisher saving into db");
 	}
 	
-	//@Test
+	@Test
 	public void validatePublisher() {
-		PublisherService service = context.getBean(PublisherService.class);
+		BuyerService service = context.getBean(BuyerService.class);
 		String login="sh4yansh@gmail.com";
 		String pass="123456";
-		Publisher publisher = service.validatePublisher(login, pass);
-		System.out.println(publisher);
+		boolean result = service.checkLoginExists(login);
+		System.out.println(result);
 	}
 	
 	//@Test

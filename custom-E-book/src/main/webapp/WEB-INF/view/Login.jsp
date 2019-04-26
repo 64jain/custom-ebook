@@ -89,7 +89,8 @@ body {
 }
 }
     </style>
-
+    
+    
 </head>
 <body>
 <!-- -----------------Displaying error-------------------------------- -->
@@ -180,12 +181,12 @@ body {
           
            <div class="form-group">
              <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" />
+             <input type="text" id="buyer_login" class="form-control" name="loginId" placeholder="Enter LoginId" required/>
              </div>
              
               <div class="form-group">
               <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-             <input type="password" class="form-control" name="password" placeholder="Enter Password" />
+             <input type="password" class="form-control" name="password" placeholder="Enter Password" required/>
             </div>
               
             
@@ -217,12 +218,12 @@ body {
           
            <div class="form-group">
              <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" />
+             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" required/>
              </div>
              
               <div class="form-group">
               <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-             <input type="password" class="form-control" name="password" placeholder="Enter Password" />
+             <input type="password" class="form-control" name="password" placeholder="Enter Password" required/>
             </div>
             
           <!--   <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a></p>--->
