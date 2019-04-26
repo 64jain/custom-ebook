@@ -21,6 +21,17 @@
     		$("#preview").html(innerHtml);
     	});
     	$("#preview").load(location.href + " #preview");
+    	
+    	$("#addToCart").click(function(){
+    		$.ajax({
+    			url: "addChapterToCart",
+    			data: {chapterId: chapter_id},
+    			success: function(str) {
+    				$("#tick_mark").show();
+    				alert("chapter was successfully added to the cart");
+    			}
+    		});
+    	});
     });
 </script>
  <style>
@@ -82,6 +93,7 @@ body{
   </ul>
 </div>
  <button type="button" class="btn btn-info" id="preview_button" style="margin-left: 20%">preview</button>
+ <button type="button" class="btn btn-success" id="addToCart" >Add to Cart</button> <img alt="added to cart" id="tick_mark" src="/images/tick.png" width="42" height="42" hidden="true">
  <input type="number" id="chapter_id" value="${chapter.id}" hidden="true">
 </div>
 </div>

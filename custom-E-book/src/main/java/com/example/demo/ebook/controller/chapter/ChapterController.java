@@ -175,7 +175,7 @@ public class ChapterController {
 		String path = service.saveCsv(file);
 		Book book = bookService.getBookById(id);
 		service.parseCsv(path, book);
-		return "responseCsv";
+		return "index";
 	}
 	
 }

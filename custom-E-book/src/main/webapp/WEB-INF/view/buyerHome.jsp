@@ -12,30 +12,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Buyer Home</title>
 <style>
-body{
+body,html{
   
    background-size:cover;
    background-repeat:no-repeat;
+   height:100%;
 }
-.button {
-	  background-color: #FF6347; /* Green */
-	 border-radius: 8px;
-	  color: white;
-	  padding: 15px 32px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 15px;
-	  margin: 4px 2px;
-	  cursor: pointer;
-	  -webkit-transition-duration: 0.4s; /* Safari */
-	  transition-duration: 0.4s;
+/* .button { */
+/* 	  background-color: #FF6347; /* Green */ */
+/* 	 border-radius: 8px; */
+/* 	  color: white; */
+/* 	  padding: 15px 32px; */
+/* 	  text-align: center; */
+/* 	  text-decoration: none; */
+/* 	  display: inline-block; */
+/* 	  font-size: 15px; */
+/* 	  margin: 4px 2px; */
+/* 	  cursor: pointer; */
+/* 	  -webkit-transition-duration: 0.4s; /* Safari */ */
+/* 	  transition-duration: 0.4s; */
 	  
-	}
-	.button2:hover {
+/* 	} */
+/* 	.button2:hover { */
 
-	  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-	}
+/* 	  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); */
+/* 	} */
 
 
 * {
@@ -80,8 +81,19 @@ form.example button:hover {
 /* } */
 
 </style>
+<script>
+	$(document).ready(function(){
+		var search = $("#search_value").val();
+		if(search==null) {
+			$("#search").attr("disabled","true");
+		}
+		else {
+			$("#search").removeAttr("disabled");
+		}
+	});
+</script>
 </head>
-<body background="/images/book_index.jpg">
+<body background="/images/book_index.jpg" >
 	
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
@@ -114,9 +126,9 @@ form.example button:hover {
 <br>
 <br>
 <form class="example" action="searchResult" style="margin: auto;max-width: 50%">
-		<input type="text" placeholder="Search.." name="keywords">
-		<button type="submit">
-			<i class="fa fa-search"></i>
+		<input id="search_value" type="text" placeholder="Search.." name="keywords">
+		<button type="submit" class="btn btn-default" id="search" disabled>
+			Search
 		</button>
 	</form>
 	</body>

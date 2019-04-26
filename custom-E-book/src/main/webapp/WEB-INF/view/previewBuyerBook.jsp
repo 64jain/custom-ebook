@@ -24,12 +24,23 @@ body{
  <script>
         	
     $(document).ready(function(){
-    	var chapter_id = $("#chapter_id").val();
-    	var innerHtml = "<iframe src=\"getpdf?id="+chapter_id+"\" style=\"position : absolute;top: 0;right: 0;height: 100%;width: 50%;\"></iframe>";
+    	var book_id = $("#chapter_id").val();
+    	var innerHtml = "<iframe src=\"getpdf?id="+book_id+"\" style=\"position : absolute;top: 0;right: 0;height: 100%;width: 50%;\"></iframe>";
     	$("#preview_button").click(function(){
     		$("#preview").html(innerHtml);
     	});
     	$("#preview").load(location.href + " #preview");
+    	
+    	$("#addToCart").click(function(){
+    		$.ajax({
+    			url: "addBookToCart",
+    			data: {bookId: book_id},
+    			success: function(str) {
+    				$("#tick_mark").show();
+    				alert("book was successfully added to the cart");
+    			}
+    		});
+    	});
     });
 </script>
 </head>
@@ -79,6 +90,8 @@ body{
   </ul>
 </div>
  <button type="button" class="btn btn-info" id="preview_button" style="margin-left: 20%">preview</button>
+ 
+ <button type="button" class="btn btn-success" id="addToCart" >Add to Cart</button> <img alt="added to cart" id="tick_mark" src="/images/tick.png" width="42" height="42" hidden="true">
  <input type="number" id="chapter_id" value="${book.id}" hidden="true">
 </div>
 </div>
