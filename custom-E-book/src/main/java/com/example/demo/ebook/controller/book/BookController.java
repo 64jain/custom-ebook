@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ebook.model.book.Book;
@@ -121,7 +122,17 @@ public class BookController {
 	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);
 	    return response;
 	}
-	
+	@RequestMapping("changeBookStatus")
+	public @ResponseBody String changeBookStatus(@RequestParam("id") String id, @RequestParam("mode") String mode, HttpSession session ) {
+		Book book = service.getBookById(Integer.parseInt(id));
+		if(mode.equals("d")) {
+			book.setDisabled(true);
+		}
+		else if(mode.equals("e")) {
+			book.setDisabled(false);
+		}
+		return "pubHome";
+	}
 	
 
 }
