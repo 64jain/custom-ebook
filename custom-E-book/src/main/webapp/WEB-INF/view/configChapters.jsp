@@ -242,7 +242,7 @@ body, html {
 		</div>
 		<div id="menu2" class="tab-pane fade">
 			<div class="jumbotron jumbotron-fluid">
-				<form action="csvUpload">
+				<form action="csvUpload" method="post" enctype="multipart/form-data">
 				<input type="number" name="id" value="${book.id}" hidden="true"/>
 				<div class="row">
 				<div class="col-sm-4 card" style="background-color: lavender;">
