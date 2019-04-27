@@ -56,4 +56,15 @@ public class BuyerServiceImpl implements BuyerService {
 		List<Payment> payments = pay_repository.findByBuyer(buyer);
 		return payments;
 	}
+
+	@Override
+	public boolean checkLoginExists(String login) {
+		List<Buyer> buyers = repository.findByLoginId(login);
+		if (buyers.size() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 }

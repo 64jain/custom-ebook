@@ -12,12 +12,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <title>Configure Chapters</title>
 <style>
-body{
+body, html {
    background-image:radial-gradient(white, grey);
    /*url("/images/white_bg2.jpg"); */
  
    background-size:cover;
    background-repeat:no-repeat;
+   
 }
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -138,14 +139,23 @@ body{
 	<!---------- end ----------------->
 	
 	
-	<form action="saveChapters" method="post">
+	
 	<div class="container-fluid" style="width:55%" align="center">
   <h1 style="font-family:Georgia;"><b>CONFIGURE CHAPTERS</b></h1>
-  
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#menu1">Manual Configuration</a></li>
+    <li><a data-toggle="pill" href="#menu2">Upload CSV</a></li>
+  </ul>
+  <div class="tab-content">
+	  <div id="menu1" class="tab-pane fade in active">
+  			<form action="saveChapters" method="post">
 			<input type="number" name="bookId" value="${book.id}" hidden="true"/>
 			<input type="number" name="noOfChapters" value="${book.noOfChapters}" hidden="true"/>
 			<input type="number" id="totalNoOfPages" name="totalNoOfPages" value="${book.totalNoOfPages}" hidden="true"/>
 			<input type="text" id="bookLoc" name="bookLoc" value="${book.bookLoc}" hidden="true"/>
+	
+  
+  	
 		<c:forEach var="i" begin="1" end="${book.noOfChapters}">
 		
 		<div class="jumbotron jumbotron-fluid" id="${i}">
@@ -156,7 +166,7 @@ body{
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="text" name="name_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -164,8 +174,8 @@ body{
 						<b>PRICE</b>
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
-						<input type="number"  name="price_${i}" min="0"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+						<input type="number" step="any" name="price_${i}" min="0"
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -182,7 +192,7 @@ body{
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="text"   name="keywords_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -192,7 +202,7 @@ body{
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="number" min="1" max="${book.totalNoOfPages}"
 				name="start_page_${i}" id="start_page_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 					<div class="row">
@@ -202,7 +212,7 @@ body{
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="number" min="1" max="${book.totalNoOfPages}"
 				name="end_page_${i}" id="end_page_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div> 
 				<br> <button type="button" class="btn btn-info" id="${i}">preview</button> <br>
@@ -227,9 +237,31 @@ body{
 			</div>
 			
 		</c:forEach>
-		
 		<input class="button button2" type="submit" value="configure chapters">
+		</form>
 		</div>
-	</form>
+		<div id="menu2" class="tab-pane fade">
+			<div class="jumbotron jumbotron-fluid">
+				<form action="csvUpload" method="post" enctype="multipart/form-data">
+				<input type="number" name="id" value="${book.id}" hidden="true"/>
+				<div class="row">
+				<div class="col-sm-4 card" style="background-color: lavender;">
+						<b>Upload CSV </b>
+					</div>
+					<div class="col-sm-6 card" style="background-color: lavenderblush;">
+						<input type="file" name="file" accept=".csv"
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
+					</div>
+					</div>
+					<div class="row">
+						<input class="button button2" type="submit" value="configure chapters">
+						
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.ebook.model.publisher.Publisher;
 import com.example.demo.ebook.service.book.BookService;
@@ -27,7 +28,8 @@ public class PublisherController {
 	public String registerPublisher(@ModelAttribute("buyer") Publisher publisher, ModelMap map) {
 		int result = service.registerPublisher(publisher);
 		map.addAttribute("result", "user created with id " + result);
-		return "successRegistration";
+		System.out.println(" INFO : Registering publisher");
+		return "index";
 	}
 
 	@RequestMapping(value = "/validatePublisherLogin", method = RequestMethod.POST)
@@ -44,6 +46,7 @@ public class PublisherController {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("id", publisher.getId());
 			session.setAttribute("publisher", publisher);
+			System.out.println(" INFO : logging in publisher");
 			return "redirect:pubHome";
 		}
 	}
@@ -52,6 +55,7 @@ public class PublisherController {
 	public String logoutPublisher(HttpSession session) {
 		String temp_loc = System.getProperty("user.dir") + "/src/main/resources/static/images/temp";
 		File index = new File(temp_loc);
+
 		String[] entries = index.list();
 		if (entries != null) {
 			for (String s : entries) {
@@ -60,7 +64,14 @@ public class PublisherController {
 			}
 		}
 		session.invalidate();
+		System.out.println(" INFO : logging out");
 		return "redirect:/";
+	}
+	
+	@RequestMapping("publisherLoginExist")
+	public @ResponseBody boolean publisherLoginExist( @RequestParam("login") String login) {
+		boolean loginExists = service.checkLoginExists(login);
+		return loginExists;
 	}
 
 }

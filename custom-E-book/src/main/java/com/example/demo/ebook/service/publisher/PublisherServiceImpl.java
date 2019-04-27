@@ -37,4 +37,13 @@ public class PublisherServiceImpl implements PublisherService {
 
 	}
 
+	@Override
+	public boolean checkLoginExists(String login) {
+		List<Publisher> publishers = repository.findByLoginId(login);
+		if (publishers.size() == 0) {
+			return false;
+		}
+		return true;
+	}
+
 }

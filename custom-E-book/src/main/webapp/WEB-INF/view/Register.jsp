@@ -91,6 +91,8 @@ body {
   clear: both;
 }
 
+.loginerror { float:right }
+
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .column.side, .column.middle {
@@ -99,6 +101,50 @@ body {
 }
 }
     </style>
+    
+    <script>
+    	$(document).ready(function(){
+    		$("#buyer_login").blur(function(){
+    			$("#buyer_error").hide();
+    			var login = $(this).val();
+    			$.ajax({
+    				url: 'buyerLoginExist',
+    				data: {login: login},
+    				success: function(exist) {
+    					if(exist==true) {
+    						$("#buyer_error").show();
+ 							$("#submit_buyer").attr("disabled", "true");
+    					}
+    					else {
+    						$("#submit_buyer").removeAttr("disabled");
+    					}
+							
+    				}
+    			});
+    		});
+    		
+    		
+    		$("#publisher_login").blur(function(){
+    			$("#publisher_error").hide();
+    			var login = $(this).val();
+    			$.ajax({
+    				url: 'publisherLoginExist',
+    				data: {login: login},
+    				success: function(exist) {
+    					if(exist==true) {
+    						$("#publisher_error").show();
+ 							$("#submit_publisher").attr("disabled", "true");
+    					}
+    					else {
+    						$("#submit_publisher").removeAttr("disabled");
+    					}
+							
+    				}
+    			});
+    		});
+    	});
+    </script>
+    
 </head>
 <body>
 	<!-- Navigation bar -->
@@ -161,31 +207,31 @@ body {
           <form action="registerBuyer" method="POST" role="form">
          
             <div class="form-group">
-             <label for="name"><span class="glyphicon glyphicon-user"></span>Buyer name</label>
-             <input type="text" class="form-control" name="name" placeholder="Enter Your Name"  />
+             <label for="name"><span class="glyphicon glyphicon-user"></span>Buyer name</label> 
+             <input type="text" class="form-control" name="name" placeholder="Enter Your Name"  required/>
              </div>
              
               <div class="form-group">
-             <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" />
+             <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label> <span id="buyer_error" class="loginerror text-danger" hidden="true">Login Id exists</span>
+             <input type="text" class="form-control" id="buyer_login" name="loginId" placeholder="Enter LoginId" required/>
              </div>
              
            
             
              <div class="form-group">
              <label for="email"><span class="glyphicon glyphicon-user"></span>Email</label>
-             <input type="text" class="form-control" name="email" placeholder="Enter Email"/>
+             <input type="text" class="form-control" name="email" placeholder="Enter Email" required/>
              </div>
                
             <div class="form-group">
               <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-             <input type="password" class="form-control" name="password" placeholder="Enter Password" />
+             <input type="password" class="form-control" name="password" placeholder="Enter Password" required />
             </div>
              
            
           <!--   <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a></p>--->
             
-              <button type="submit" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span> Register!!</button>
+              <button type="submit" id="submit_buyer" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span> Register!!</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -216,8 +262,8 @@ body {
              </div>
              
               <div class="form-group">
-             <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" required/>
+             <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label> <span id="publisher_error" class="loginerror text-danger" hidden="true">Login Id exists</span>
+             <input type="text" id="publisher_login" class="form-control" id="publisher_login" name="loginId" placeholder="Enter LoginId" required/>
              </div>
             
              <div class="form-group">
@@ -234,7 +280,7 @@ body {
             
           <!--   <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a></p>--->
             
-              <button type="submit" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span> Register!!</button>
+              <button type="submit" id="submit_publisher" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span> Register!!</button>
           </form>
         </div>
         <div class="modal-footer">

@@ -167,7 +167,7 @@ public class ChapterServiceImpl implements ChapterService {
 		{
 	        for (CSVRecord csvRecord : csvParser) {
 	            // Accessing values by Header names
-	            String name = csvRecord.get("Name");
+	            String name = csvRecord.get("name");
 	            String keyword = csvRecord.get("keywords");
 	            String description = csvRecord.get("description");
 	            String Price = csvRecord.get("price");

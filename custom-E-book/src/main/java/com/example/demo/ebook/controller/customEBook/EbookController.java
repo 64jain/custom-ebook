@@ -69,6 +69,7 @@ public class EbookController {
 		if (chapters != null)
 			map.addAttribute("chapters", chapters);
 		map.addAttribute("keywords", keywords);
+		System.out.println(" INFO : searching for chapters/books");
 		return "searchResult";
 	}
 
@@ -79,6 +80,7 @@ public class EbookController {
 		if(buyer==null)
 			return "redirect:loginBuyerPublisher";
 		int save = service.saveEBook(bookIdList, chapterIdList, buyer);
+		System.out.println(" INFO : adding to cart");
 		return "redirect:showEbookContent";
 	}
 	@RequestMapping(value = "/deletechapter/{id}")
@@ -221,5 +223,27 @@ public class EbookController {
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		service.mergePdf(buyer,true,"");
 		return "redirect:buyHome";
+	}
+	
+	@RequestMapping("addBookToCart")
+	public @ResponseBody String addBookToCart(@RequestParam("bookId")int bookId,ModelMap map, HttpSession session) {
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
+		ArrayList<Integer> bookList = new ArrayList<>();
+		bookList.add(bookId);
+		service.saveEBook(bookList, null, buyer);
+		return "";
+	}
+	
+	@RequestMapping("addChapterToCart")
+	public @ResponseBody String addChapterToCart(@RequestParam("chapterId")int chapterId,ModelMap map, HttpSession session) {
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
+		ArrayList<Integer> chapterList = new ArrayList<>();
+		chapterList.add(chapterId);
+		service.saveEBook(null, chapterList, buyer);
+		return "";
 	}
 }

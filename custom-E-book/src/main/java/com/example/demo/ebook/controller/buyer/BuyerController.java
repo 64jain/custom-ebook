@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
@@ -37,7 +38,8 @@ public class BuyerController {
 	public String registerBuyer(@ModelAttribute("buyer") Buyer buyer, ModelMap map) {
 		int result = service.registerBuyer(buyer);
 		map.addAttribute("result", "user created with id "+result);
-		return "successRegistration";
+		System.out.println(" INFO : Registering in buyer");
+		return "index";
 	}
 	
 	@RequestMapping(value = "/validateBuyerLogin", method = RequestMethod.POST)
@@ -60,6 +62,7 @@ public class BuyerController {
 	@RequestMapping("/logoutBuyer")
 	public String logoutPublisher(HttpSession session) {
 		session.invalidate();
+		System.out.println(" INFO : logging out buyer");
 		return "redirect:/";
 	}
 	@RequestMapping("/myOrders")
@@ -102,5 +105,9 @@ public class BuyerController {
 	    return response;
 	}
 	
-	
+	@RequestMapping("buyerLoginExist")
+	public @ResponseBody boolean buyerLoginExist( @RequestParam("login") String login) {
+		boolean loginExists = service.checkLoginExists(login);
+		return loginExists;
+	}
 }

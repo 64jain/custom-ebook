@@ -59,6 +59,13 @@ $('.carousel .item').each(function(){
   	$(this).siblings(':first').children(':first-child').clone().appendTo($(this));
   }
 });
+ 
+$(document).ready(function(){
+	var res = <%=session.getAttribute("result") %>;
+	if (res!=null) {
+		alert(res);
+	}
+});
   </script>
 </head>
 <body background="/images/index.jpeg" >
@@ -183,9 +190,6 @@ $('.carousel .item').each(function(){
 </div>
 </div>
 </div>
-
-
-
 
 </body>
 </html>

@@ -50,10 +50,11 @@ body{
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Register Book</a>
+				<a class="navbar-brand" href="/">Home</a>
+				
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
+				<li class="active"><a href="#">Register Book</a></li>
 				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -82,7 +83,7 @@ body{
   </div>
    <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>PRICE</b> </div>
-    <div class="col-sm-6 card" style="background-color:lavenderblush;">  <input type="number" name="price" style="font-size: 18pt; height: 40px; width:280px; "/></div>
+    <div class="col-sm-6 card" style="background-color:lavenderblush;">  <input type="number" step="any" name="price" style="font-size: 18pt; height: 40px; width:280px; "/></div>
   </div>
    <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>KEYWORDS</b></div>

@@ -44,6 +44,7 @@ public class BookController {
 		map.addAttribute("result", "book created with id "+result.getId());
 		service.saveBook(file, result, publisher.getId());
 		map.addAttribute("book",result);
+		System.out.println(" INFO : Registering book");
 		return "successBookRegistration";
 	}
 	
@@ -59,6 +60,7 @@ public class BookController {
 				index.mkdirs();
 			}
 			String[]entries = index.list();
+
 			if(entries !=null) {
 				for(String s: entries){
 				    File currentFile = new File(index.getPath(),s);

@@ -44,7 +44,8 @@ public class CustomEBookApplicationTests {
 		buyer.setLoginId("set");
 		buyer.setName("john");
 		buyer.setPassword("pass");
-		service.registerBuyer(buyer);
+		//service.registerBuyer(buyer);
+		System.out.println("TEST : buyer saving into db");
 		//repository.save(buyer);
 	}
 	//@Test
@@ -57,16 +58,17 @@ public class CustomEBookApplicationTests {
 		publisher.setName("john");
 		publisher.setPassword("pass");
 //		service.registerBuyer(buyer);
-		repository.save(publisher);
+		//repository.save(publisher);
+		System.out.println("TEST : publisher saving into db");
 	}
 	
-	//@Test
+	@Test
 	public void validatePublisher() {
-		PublisherService service = context.getBean(PublisherService.class);
+		BuyerService service = context.getBean(BuyerService.class);
 		String login="sh4yansh@gmail.com";
 		String pass="123456";
-		Publisher publisher = service.validatePublisher(login, pass);
-		System.out.println(publisher);
+		boolean result = service.checkLoginExists(login);
+		System.out.println(result);
 	}
 	
 	//@Test
@@ -132,7 +134,7 @@ public class CustomEBookApplicationTests {
 		System.out.println(previewChapter);
 	}
 
-	@Test
+	//@Test
 	public void testCsv() {
 		ChapterService chap_service = context.getBean(ChapterService.class);
 		BookService service = context.getBean(BookService.class);
