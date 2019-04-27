@@ -249,7 +249,7 @@ body, html {
 						<b>Upload CSV </b>
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
-						<input type="file" name="file" accept=".pdf"
+						<input type="file" name="file" accept=".csv"
 							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 					</div>
