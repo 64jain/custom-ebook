@@ -178,11 +178,5 @@ public class ChapterController {
 		service.parseCsv(path, book);
 		return "responseCsv";
 	}
-//	@RequestMapping("getPreviewImage")
-//	public ResponseEntity<byte[]>(@RequestParam("id"))
-//	{
-//		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>();
-//		return responseEntity;
-//	}
 	
 }
