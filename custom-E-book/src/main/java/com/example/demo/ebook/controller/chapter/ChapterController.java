@@ -26,6 +26,7 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.service.book.BookService;
 import com.example.demo.ebook.service.chapter.ChapterService;
+import com.google.common.primitives.Bytes;
 
 @Controller
 public class ChapterController {
@@ -177,5 +178,11 @@ public class ChapterController {
 		service.parseCsv(path, book);
 		return "responseCsv";
 	}
+//	@RequestMapping("getPreviewImage")
+//	public ResponseEntity<byte[]>(@RequestParam("id"))
+//	{
+//		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>();
+//		return responseEntity;
+//	}
 	
 }
