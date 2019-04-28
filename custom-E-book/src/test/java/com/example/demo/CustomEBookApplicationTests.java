@@ -62,7 +62,7 @@ public class CustomEBookApplicationTests {
 		System.out.println("TEST : publisher saving into db");
 	}
 	
-	@Test
+	//@Test
 	public void validatePublisher() {
 		BuyerService service = context.getBean(BuyerService.class);
 		String login="sh4yansh@gmail.com";
@@ -146,8 +146,30 @@ public class CustomEBookApplicationTests {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}	
+	}
+	
+	@Test
+	public void getRecommendedBooks()
+	{
+		EbookService service = context.getBean(EbookService.class);
+		Buyer buyer=new Buyer();
+		buyer.setId(4);
+		buyer.setEmail("sam@gmail.com");
+		buyer.setLoginId("sam1096");
+		buyer.setName("sam");
+		buyer.setPassword("1234");
+		System.out.println("**********************");
+		System.out.println(buyer);
+		System.out.println("**********************");
+		List<Book>book=service.findRecommendedBooks(buyer);
+//		for(int i=0;i<book.size();i++)
+//		{System.out.println("**********************");
+//			System.out.println(book.get(i).getBookName());
+//			System.out.println("**********************");
+//
+//		}
+		System.out.println("size of books:"+book.size());
 		
 	}
 }

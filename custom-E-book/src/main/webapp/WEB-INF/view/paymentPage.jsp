@@ -225,8 +225,9 @@
 					</div>
 				</div>
 			</div>
-			<input type="hidden" name="price" value="${price}" /> <input
-				type="submit" value="Buy Now" />
+			<input type="hidden" name="keywords" value="${keywords}"/>
+			<input type="hidden" name="price" value="${price}" /> 
+<input type="submit" value="Buy Now" />
 				</div>
 	</form>
 

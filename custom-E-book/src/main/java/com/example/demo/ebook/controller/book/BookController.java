@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ebook.model.book.Book;
+import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.publisher.Publisher;
 import com.example.demo.ebook.service.book.BookService;
@@ -133,6 +134,7 @@ public class BookController {
 		}
 		return "pubHome";
 	}
+	
 	
 
 }

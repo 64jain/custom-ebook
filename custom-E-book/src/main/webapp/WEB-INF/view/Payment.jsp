@@ -52,7 +52,7 @@ body{
 <input type="radio" name="price" value=${price} checked="checked"> <font size="5" ><b>SoftCopy for ${price}</b></font><br>
 <input type="radio" name="price" value=${hardCopyPrice}><font size="5" ><b>Hard Copy for ${hardCopyPrice}</b></font><br>
 <input type="hidden" name="hardCopyPrice" value="${ hardCopyPrice}"/>
-
+<input type="hidden" name="keywords" value="${keywords}"/>
 <i>(Rs. 0.5/page and 30/- for shipping)</i><br>
 <input  class="btn btn-info" type="submit" value="Buy Now"/>
 </form>

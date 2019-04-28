@@ -1,16 +1,25 @@
 package com.example.demo.ebook.controller.def;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.ebook.model.book.Book;
+import com.example.demo.ebook.model.buyer.Buyer;
+import com.example.demo.ebook.service.customEBook.EbookService;
+
 @Controller
 public class DefaultController {
+	
+	@Autowired
+	EbookService service;
 
 	@RequestMapping("/")
 	public String test(HttpServletRequest request) {
@@ -89,6 +98,9 @@ public class DefaultController {
 		if (session.getAttribute("id") == null) {
 			return "redirect:loginBuy";
 		} else {
+			Buyer buyer=(Buyer)session.getAttribute("buyer");
+			List<Book> books= service.findRecommendedBooks(buyer);
+			map.addAttribute("books",books);
 			return "buyerHome";
 		}
 	}
