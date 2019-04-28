@@ -25,7 +25,6 @@ public class Payment {
 	//@Temporal(TemporalType.DATE)
 	private Date purchaseDate;
 	private String title;
-	private String keywords;
 	
 	public int getId() {
 		return id;
@@ -89,18 +88,11 @@ public class Payment {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	public String getKeywords() {
-		return keywords;
-	}
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", name=" + name + ", email=" + email + ", buyer_addr=" + buyer_addr + ", buyer="
 				+ buyer + ", hardCopy=" + hardCopy + ", price=" + price + ", payment_method=" + payment_method
-				+ ", purchaseDate=" + purchaseDate + ", title=" + title + ", keywords=" + keywords + "]";
+				+ ", purchaseDate=" + purchaseDate + ", title=" + title + "]";
 	}
 	
 	

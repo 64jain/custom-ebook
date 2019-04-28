@@ -201,7 +201,7 @@ public class EbookController {
 		System.out.println(copy_type);
 		System.out.println(paymentMethod);
 		System.out.println("********************************************************");
-		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
+		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod,title);
 		
 		String location=service.mergePdf(buyer,false,title);
 		order_service.saveOrder(buyer, payment, location);

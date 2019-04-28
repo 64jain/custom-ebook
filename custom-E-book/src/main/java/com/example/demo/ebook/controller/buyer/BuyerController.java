@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
+import com.example.demo.ebook.model.orderedEbook.OrderedEbook;
 import com.example.demo.ebook.model.payment.Payment;
+import com.example.demo.ebook.repository.orderedEbook.OrderedEbookRepository;
 import com.example.demo.ebook.service.buyer.BuyerService;
+import com.example.demo.ebook.service.orderedEbook.OrderedEbookService;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
@@ -33,6 +36,8 @@ public class BuyerController {
 	
 	@Autowired
 	BuyerService service;
+	@Autowired
+	OrderedEbookService order_service;
 	
 	@RequestMapping(value = "/registerBuyer", method = RequestMethod.POST)
 	public String registerBuyer(@ModelAttribute("buyer") Buyer buyer, ModelMap map) {
@@ -69,15 +74,13 @@ public class BuyerController {
 	public String myOrders(ModelMap map,HttpSession session) {
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 //		List<File> files_list = service.buyerMyOrders(buyer);
-		List<Payment> payments = service.buyerPayments(buyer);
-		if(payments!=null) {
-			map.addAttribute("payments", payments);
+//		List<Payment> payments = service.buyerPayments(buyer);
+		List<OrderedEbook> orderedEbooks = order_service.getOrderderedEbook(buyer);
+		if(orderedEbooks!=null) {
+			map.addAttribute("orderBooks", orderedEbooks);
+		}
 			return "myOrders";
-		}
-		else {
-			
-			return "noOrders";
-		}
+		
 	}
 	@RequestMapping("/displayEbook")
 	public String displayEbook(@RequestParam int index, ModelMap map,HttpSession session) {
@@ -89,16 +92,18 @@ public class BuyerController {
 	public ResponseEntity<byte[]> getEbook(@RequestParam("index") int index, HttpSession session ) throws IOException {
 		
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
-		List<File> files_list = service.buyerMyOrders(buyer);
-		File ebook = files_list.get(index-1);
+//		List<File> files_list = service.buyerMyOrders(buyer);
+//		File ebook = files_list.get(index-1);
 	    HttpHeaders headers = new HttpHeaders();
 
 	    headers.setContentType(MediaType.parseMediaType("application/pdf"));
-	    String filename = ebook.getAbsolutePath();
-	    System.out.println(filename);
-	    File file = ebook;
+//	    String filename = ebook.getAbsolutePath();
+//	    System.out.println(filename);
+//	    File file = ebook;
+	    OrderedEbook orderedEbook = order_service.getSingleEbook(index);
+	    File file = new File(orderedEbook.getLocation());
 	    byte[] pdf1Bytes = Files.readAllBytes(file.toPath());
-	    headers.add("content-disposition", "inline;filename=" + filename);
+	    headers.add("content-disposition", "inline;filename=" + orderedEbook.getLocation());
 
 	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);

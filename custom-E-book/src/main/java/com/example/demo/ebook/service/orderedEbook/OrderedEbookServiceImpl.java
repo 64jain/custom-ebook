@@ -2,6 +2,7 @@ package com.example.demo.ebook.service.orderedEbook;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,16 @@ class OrderedEbookServiceImpl implements OrderedEbookService{
 				orderEbook.setChapterList(chapter_set);
 				repository.save(orderEbook);
 				
+	}
+	@Override
+	public List<OrderedEbook> getOrderderedEbook(Buyer buyer) {
+		List<OrderedEbook> orderedEbooks = repository.findByBuyer(buyer);
+		return orderedEbooks;
+	}
+	@Override
+	public OrderedEbook getSingleEbook(int id) {
+		Optional<OrderedEbook> orderedEbook = repository.findById(id);
+		return orderedEbook.get();
 	}
 	
 }
