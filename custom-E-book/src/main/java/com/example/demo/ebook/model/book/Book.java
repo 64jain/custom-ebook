@@ -15,8 +15,6 @@ public class Book implements Serializable{
 	@Column(unique=true)
 	private String isbn;
 	private String bookName;
-	
-
 	@ManyToOne
 	private Publisher publisher;
 	private int noOfChapters;
@@ -27,7 +25,6 @@ public class Book implements Serializable{
 
 	private boolean chaptersAdded;
 	private boolean disabled;
-
 	
 	private String description;
 

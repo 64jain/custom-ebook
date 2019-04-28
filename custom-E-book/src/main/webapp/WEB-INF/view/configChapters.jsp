@@ -98,22 +98,6 @@ body, html {
 // 			alert("id = "+id + " start page = "+startPage+" endPage = "+endPage);
 		});
 	});
-<<<<<<< HEAD
-	
-	$(document).ready(function() {
-  $("#scroll").click(function(e)  {
-var i=e+1;
-var div="div_i";
-    e.preventDefault();
-
-    $("body, html").animate({ 
-      scrollTop: $( $(#div).offset().top 
-    }, 600);
-
-  });
-});
-</script>
-=======
 	</script>
 	<script>
 	function scrollDown(i)
@@ -129,7 +113,6 @@ var div="div_i";
 	 document.getElementById(n).scrollIntoView(true);
 	}
 	</script>
->>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 
 </head>
 <body>
@@ -175,11 +158,7 @@ var div="div_i";
   	
 		<c:forEach var="i" begin="1" end="${book.noOfChapters}">
 		
-<<<<<<< HEAD
-		<div class="jumbotron jumbotron-fluid" id="div_${i}">
-=======
 		<div class="jumbotron jumbotron-fluid" id="${i}">
->>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 			<h3><b>Chapter ${i} </b></h3>
 			  <div class="row">
 					<div class="col-sm-4 card" style="background-color: lavender;">
@@ -236,19 +215,11 @@ var div="div_i";
 							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div> 
-<<<<<<< HEAD
-				<br> <button type="button" id="${i}">preview</button> <br>
-=======
 				<br> <button type="button" class="btn btn-info" id="${i}">preview</button> <br>
->>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 				<div  class="loader" id="spin_${i}" hidden="true"></div>
 			<img src="" hidden="true" id="start_img_${i}" height="200" width="150">
 			<img src="" hidden="true" id="end_img_${i}" height="200" width="150">
 			<br>
-<<<<<<< HEAD
-			<br>
-			
-=======
 					<c:set var="totalbooks" value="${book.noOfChapters}" />
 					<c:choose>
 						<c:when test="${i==totalbooks}">
@@ -263,13 +234,8 @@ var div="div_i";
 						</c:otherwise>
 					</c:choose>
 					
->>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 			</div>
-<<<<<<< HEAD
-			<button type="button" id="button_${i}" onclick="scrollDown(${i})"></button>
-=======
 			
->>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 		</c:forEach>
 		<input class="button button2" type="submit" value="configure chapters">
 		</form>
