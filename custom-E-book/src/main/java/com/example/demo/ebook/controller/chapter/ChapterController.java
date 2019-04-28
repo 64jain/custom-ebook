@@ -177,7 +177,7 @@ public class ChapterController {
 		Book book = bookService.getBookById(id);
 		service.parseCsv(path, book);
 		book.setChaptersAdded(true);
-		return "index";
+		return "redirect:pubHome";
 	}
 	
 }
