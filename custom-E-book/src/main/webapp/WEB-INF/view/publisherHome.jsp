@@ -23,21 +23,34 @@ body{
 	text-align: center;
 	/*background-color: #f1f1f1;*/
 }
-.button {
-  background-color: #FF6347; /* Green */
- border-radius: 8px;
+
+.button-disable {
+  background-color: red;
+  border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 15px;
+  font-size: 12px;
   margin: 4px 2px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  
 }
+
+.button-enable {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+}
+
+.button5 {border-radius: 50%;}
+
+
 .button2:hover {
 
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
@@ -47,6 +60,23 @@ body{
   border-left: 6px solid #2196F3;
 }
 </style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("button").click(function(){
+			var id = $(this).attr("id").substring(2);
+			var d_e = $(this).attr("id").substring(0,1);
+			$.ajax({
+				url: "changeBookStatus",
+				data: {id:id, mode:d_e},
+				success: function(data)
+				{
+					window.location = data;
+				} 
+			});
+			
+		});
+	});
+</script>
 </head>
 <body background="/images/grey_bg.jpg">
 <!---------------------NavBar opening -------------------------->
@@ -57,7 +87,7 @@ body{
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/">Home</a></li>
-				<li><a href="#">About</a></li>
+				<li><a href="/about">About</a></li>
 				<li><a href="/regBook">Register Book</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -125,6 +155,17 @@ body{
 							</c:otherwise>
 									</c:choose>
 								</div></td>
+								
+								<td>
+								<c:choose>
+									<c:when test="${book.disabled==false}">
+										<button type="button" class="button-disable button5" id="d_${book.id}">Disable</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="button-enable button5" id="e_${book.id}">Enable</button>
+									</c:otherwise>
+								</c:choose>								
+								 </td>
 						</tr>
 					</c:forEach>
 				</tbody>

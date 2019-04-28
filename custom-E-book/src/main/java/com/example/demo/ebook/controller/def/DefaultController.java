@@ -13,7 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DefaultController {
 
 	@RequestMapping("/")
-	public String test() {
+	public String test(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session==null) {
+			return "index";
+		}
+		if (session.getAttribute("id") != null) {
+			if(session.getAttribute("publisher")!=null) {
+				return "redirect:pubHome";
+			}
+			else if (session.getAttribute("buyer")!=null) {
+				return "redirect:buyHome";
+			}
+		}
 		return "index";
 	}
 	@RequestMapping("/about")

@@ -59,6 +59,13 @@ $('.carousel .item').each(function(){
   	$(this).siblings(':first').children(':first-child').clone().appendTo($(this));
   }
 });
+ 
+$(document).ready(function(){
+	var res = <%=session.getAttribute("result") %>;
+	if (res!=null) {
+		alert(res);
+	}
+});
   </script>
 </head>
 <body background="/images/index.jpeg" >
@@ -154,33 +161,35 @@ $('.carousel .item').each(function(){
 <!-- footer area -->
 <!-- <a href="/regBuyer">register Buyer</a> <br/> -->
 <!-- <a href="/regPublisher">register Publisher</a> <br/> -->
+ <h2 style="color:white;"><b>Custom E Books</b></h2> 
 <div class="container">
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-10 col-md-offset-1">
 <div class="carousel slide" id="myCarousel">
   <div class="carousel-inner">
     <div class="item active">
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/angelsdemons.jpg" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/harrypotter1.jpg" class="img-responsive"></a></div>
+      <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
     </div>
+<!--     <div class="item"> -->
+<!--     </div> -->
     <div class="item">
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/lifeofpi.jpg" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/davinci.jpg" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
     </div>
     <div class="item">
+      <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
       <div class="col-md-4"><a href="#"><img src="/images/bookcover/twilight.jpg" class="img-responsive"></a></div>
+      <div class="col-md-4"><a href="#"><img src="/images/bookcover/harrypotter1.jpg" class="img-responsive"></a></div>
     </div>
+    
   </div>
   <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
   <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>
 </div>
 </div>
+
 </body>
 </html>

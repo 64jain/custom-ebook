@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.chapter.Chapter;
@@ -83,7 +84,7 @@ public class ChapterController {
 		for(Chapter chapter : chapters) {
 			int chapId = chapter.getId();
 			chapter.setName(params.get("name_"+chapId));
-			chapter.setPrice(Integer.parseInt(params.get("price_"+chapId)));
+			chapter.setPrice(Double.parseDouble(params.get("price_"+chapId)));
 			chapter.setDescription(params.get("description_"+chapId));
 			chapter.setKeywords(params.get("keywords_"+chapId));
 			service.saveChapter(chapter);
@@ -111,14 +112,14 @@ public class ChapterController {
 		ArrayList<String> chapNames = new ArrayList<String>();
 		ArrayList<String> chapKeywords = new ArrayList<String>();
 		ArrayList<String> chapDescription = new ArrayList<String>();
-		ArrayList<Integer> chapPrice = new ArrayList<Integer>();
+		ArrayList<Double> chapPrice = new ArrayList<Double>();
 		ArrayList<Integer> chapStartPage = new ArrayList<Integer>();
 		ArrayList<Integer> chapEndPage = new ArrayList<Integer>();
 		for (int i = 1; i <= book.getNoOfChapters(); i++) {
 			chapNames.add(params.get("name_" + i));
 			chapKeywords.add(params.get("keywords_" + i));
 			chapDescription.add(params.get("description_" + i));
-			chapPrice.add(Integer.parseInt(params.get("price_" + i)));
+			chapPrice.add(Double.parseDouble(params.get("price_" + i)));
 			chapStartPage.add(Integer.parseInt(params.get("start_page_" + i)));
 			chapEndPage.add(Integer.parseInt(params.get("end_page_" + i)));
 		}
@@ -163,6 +164,19 @@ public class ChapterController {
 			return "previewBuyerChapter";
 		}
 		
+	}
+	@RequestMapping("testCsv")
+	public String testCsv()
+	{
+		return "csvUpload";
+	}
+	@RequestMapping("csvUpload")
+	public String csvUpload(@RequestParam("file") MultipartFile file,@RequestParam("id") int id) throws IOException {
+		String path = service.saveCsv(file);
+		Book book = bookService.getBookById(id);
+		service.parseCsv(path, book);
+		book.setChaptersAdded(true);
+		return "index";
 	}
 	
 }

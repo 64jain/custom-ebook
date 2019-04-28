@@ -69,6 +69,7 @@ public class EbookController {
 		if (chapters != null)
 			map.addAttribute("chapters", chapters);
 		map.addAttribute("keywords", keywords);
+		System.out.println(" INFO : searching for chapters/books");
 		return "searchResult";
 	}
 
@@ -79,6 +80,7 @@ public class EbookController {
 		if(buyer==null)
 			return "redirect:loginBuyerPublisher";
 		int save = service.saveEBook(bookIdList, chapterIdList, buyer);
+		System.out.println(" INFO : adding to cart");
 		return "redirect:showEbookContent";
 	}
 	@RequestMapping(value = "/deletechapter/{id}")
@@ -95,7 +97,7 @@ public class EbookController {
 	
 	
 	@RequestMapping(value = "/saveEbookContent")
-	public String SaveContent(ModelMap map,HttpSession session,@RequestParam("ebookid")List<Integer>ebookid,@RequestParam("sequence")List<Integer>sequence)
+	public String SaveContent(ModelMap map,HttpSession session, @RequestParam("sequence_string") String seqString)
 	{
 		if (session.getAttribute("id") == null) {
 			return "redirect:loginBuyerPublisher";
@@ -103,27 +105,25 @@ public class EbookController {
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if (buyer == null)
 			return "redirect:loginBuyerPublisher";
-			//to check whether dropdown contains duplicate values
-			List<Integer>duplicate=new ArrayList<Integer>();
-			for(int i=0;i<sequence.size();i++)
-			{
-				duplicate.add(sequence.get(i));
-			}
-			Collections.sort(duplicate);
-			for (int i = 0; i < duplicate.size()-1; i++) {
-			   if(duplicate.get(i).equals(duplicate.get(i+1)))
-			   {map.addAttribute("error", "Selected particular sequence more than once");
-		      return "redirect:showEbookContent";
-		    }
-			}
-		int i=service.updateEbook(ebookid,sequence);
+		
+		if(seqString.equals("")) {
+			return "redirect:showEbookContent";
+		}
+		String [] seq = seqString.split(",");
+		ArrayList<Integer> idList = new ArrayList<Integer>();
+		ArrayList<Integer> sequence = new ArrayList<>();
+		int k=1;
+		for(String s:seq) {
+			idList.add(Integer.parseInt(s));
+			sequence.add(k);
+			k++;
+		}
+		int i=service.updateEbook(idList,sequence);
 		if(i==1)
 			map.addAttribute("result", "successfully added");
 		else
 			map.addAttribute("result", "failed");
 		return "redirect:showEbookContent";
-		
-		
 	}
 	@RequestMapping(value ="/payment")
 	public String Payment(HttpSession session,ModelMap map)
@@ -152,7 +152,7 @@ public class EbookController {
 			}
 		}
 		double hardCopyPrice = total+totalPages*0.5 +30;
-		service.mergePdf(buyer, true);    //for creating ebook preview
+		service.mergePdf(buyer, true,"");    //for creating ebook preview
 		map.addAttribute("price", total);
 		map.addAttribute("hardCopyPrice", hardCopyPrice);
 		return "Payment";
@@ -177,7 +177,7 @@ public class EbookController {
 	}
 	
 	@RequestMapping("/successPayment")
-	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("paymentMethod")String paymentMethod)
+	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("paymentMethod")String paymentMethod,@RequestParam("title") String title)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if(buyer==null)
@@ -191,8 +191,8 @@ public class EbookController {
 		System.out.println(copy_type);
 		System.out.println(paymentMethod);
 		System.out.println("********************************************************");
-		service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
-		service.mergePdf(buyer,false);
+		service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod,title);
+		service.mergePdf(buyer,false,title);
 		//String filename="/home/samridhi/mid.pdf";
 		//SendEmail s=new SendEmail(price,filename);
 		service.deleteContentAfterSave(buyer);
@@ -221,7 +221,29 @@ public class EbookController {
 	public String combinePdf(HttpSession session)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
-		service.mergePdf(buyer,true);
+		service.mergePdf(buyer,true,"");
 		return "redirect:buyHome";
+	}
+	
+	@RequestMapping("addBookToCart")
+	public @ResponseBody String addBookToCart(@RequestParam("bookId")int bookId,ModelMap map, HttpSession session) {
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
+		ArrayList<Integer> bookList = new ArrayList<>();
+		bookList.add(bookId);
+		service.saveEBook(bookList, null, buyer);
+		return "";
+	}
+	
+	@RequestMapping("addChapterToCart")
+	public @ResponseBody String addChapterToCart(@RequestParam("chapterId")int chapterId,ModelMap map, HttpSession session) {
+		Buyer buyer = (Buyer) session.getAttribute("buyer");
+		if(buyer==null)
+			return "redirect:loginBuyerPublisher";
+		ArrayList<Integer> chapterList = new ArrayList<>();
+		chapterList.add(chapterId);
+		service.saveEBook(null, chapterList, buyer);
+		return "";
 	}
 }

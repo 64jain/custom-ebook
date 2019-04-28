@@ -50,11 +50,12 @@ body{
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Register Book</a>
+				<a class="navbar-brand" href="/">Home</a>
+				
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
-				<li><a href="#">About</a></li>
+				<li class="active"><a href="#">Register Book</a></li>
+				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/logoutPublisher"><span class="glyphicon glyphicon-log-in"></span>
@@ -82,7 +83,7 @@ body{
   </div>
    <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>PRICE</b> </div>
-    <div class="col-sm-6 card" style="background-color:lavenderblush;">  <input type="number" name="price" style="font-size: 18pt; height: 40px; width:280px; "/></div>
+    <div class="col-sm-6 card" style="background-color:lavenderblush;">  <input type="number" step="any" name="price" style="font-size: 18pt; height: 40px; width:280px; "/></div>
   </div>
    <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>KEYWORDS</b></div>
@@ -90,11 +91,11 @@ body{
   </div>
     <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>DESCRIPTION</b></div>
-    <div class="col-sm-6 card" style="background-color:lavenderblush;"><input type="text" name="description" style="font-size: 18pt; height: 40px; width:280px; " /></div>
+    <div class="col-sm-6 card" style="background-color:lavenderblush;"><textarea name="description" rows="4" cols="30" style="font-size: 18pt; width:280px; "></textarea></div>
   </div>
    <div class="row">
     <div class="col-sm-4 card" style="background-color:lavender;"><b>UPLOAD YOUR BOOK</b></div>
-    <div class="col-sm-6 card" style="background-color:lavenderblush;"> <input type="file" name="file" style="font-size: 14pt; height: 40px; width:280px; "/></div>
+    <div class="col-sm-6 card" style="background-color:lavenderblush;"> <input type="file" name="file" accept=".pdf" style="font-size: 14pt; height: 40px; width:280px; "/></div>
   </div>
  
   <input type="submit" class="button button2" name="register">

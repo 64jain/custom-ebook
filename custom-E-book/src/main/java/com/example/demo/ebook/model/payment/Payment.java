@@ -1,8 +1,12 @@
 package com.example.demo.ebook.model.payment;
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.example.demo.ebook.model.buyer.Buyer;
 @Entity
@@ -18,6 +22,9 @@ public class Payment {
 	private boolean hardCopy;
 	private double price;
 	private String payment_method;
+	//@Temporal(TemporalType.DATE)
+	private Date purchaseDate;
+	private String title;
 	
 	public int getId() {
 		return id;
@@ -69,11 +76,25 @@ public class Payment {
 	public void setPayment_method(String payment_method) {
 		this.payment_method = payment_method;
 	}
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", name=" + name + ", email=" + email + ", buyer_addr=" + buyer_addr + ", buyer="
-				+ buyer + ", hardCopy=" + hardCopy + ", price=" + price + ", payment_method=" + payment_method + "]";
+				+ buyer + ", hardCopy=" + hardCopy + ", price=" + price + ", payment_method=" + payment_method
+				+ ", purchaseDate=" + purchaseDate + ", title=" + title + "]";
 	}
+	
 	
 	
 }

@@ -104,6 +104,11 @@
 								<c:choose>
 									<c:when test="${price==hardCopyPrice}">
 										<table class="table table-striped" style="font-weight: bold;">
+										<tr>
+												<td style="width: 175px;"><label for="title">Title of the Book:</label></td>
+												<td><input class="form-control" name="title"
+													required="required" type="text"/></td>
+											</tr>
 											<tr>
 												<td style="width: 175px;"><label for="name">Recipient name:</label></td>
 												<td><input class="form-control" name="name"
@@ -137,6 +142,11 @@
 									<c:otherwise>
 										<table class="table table-striped"
 											style="font-weight: bold; ">
+											<tr>
+												<td style="width: 175px;"><label for="title">Title of the Book:</label></td>
+												<td><input class="form-control" name="title"
+													required="required" type="text"/></td>
+											</tr>
 											<tr>
 												<td style="width: 175px;"><label for="name">Recipient name:</label></td>
 												<td><input class="form-control" name="name"

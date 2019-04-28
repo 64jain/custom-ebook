@@ -26,7 +26,9 @@ public class Book implements Serializable{
 	private String keywords;
 
 	private boolean chaptersAdded;
+	private boolean disabled;
 
+	
 	private String description;
 
 	
@@ -121,6 +123,13 @@ public class Book implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
 	
 }

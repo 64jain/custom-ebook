@@ -3,10 +3,16 @@ package com.example.demo.ebook.service.chapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -18,6 +24,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.chapter.Chapter;
@@ -30,7 +37,7 @@ public class ChapterServiceImpl implements ChapterService {
 
 	@Override
 	public int saveChapters(ArrayList<String> names, ArrayList<String> keywords, ArrayList<String> description,
-			ArrayList<Integer> price, ArrayList<Integer> startPage, ArrayList<Integer> endPage, Book book)
+			ArrayList<Double> price, ArrayList<Integer> startPage, ArrayList<Integer> endPage, Book book)
 			throws IOException {
 		String sourceDocument = book.getBookLoc();
 		String chapLocation = sourceDocument.substring(0, sourceDocument.length() - 17) + "chap_";
@@ -139,6 +146,71 @@ public class ChapterServiceImpl implements ChapterService {
 		    e.printStackTrace();
 		}
 		return preview_loc;
+	}
+
+
+	@Override
+	public void parseCsv(String csvFile,Book book) throws IOException{
+		ArrayList<String> names = new ArrayList<>(); 
+		ArrayList<String> keywords = new ArrayList<>();
+		ArrayList<String> Description = new ArrayList<>();
+		ArrayList<Double> price = new ArrayList<>();
+		ArrayList<Integer> startPage = new ArrayList<>(); 
+		ArrayList<Integer> endPage = new ArrayList<>();
+		try (
+	            Reader reader = Files.newBufferedReader(Paths.get(csvFile));
+	            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+	                    .withFirstRecordAsHeader()
+	                    .withIgnoreHeaderCase()
+	                    .withTrim());
+	        )
+		{
+	        for (CSVRecord csvRecord : csvParser) {
+	            // Accessing values by Header names
+	            String name = csvRecord.get("name");
+	            String keyword = csvRecord.get("keywords");
+	            String description = csvRecord.get("description");
+	            String Price = csvRecord.get("price");
+	            String start_page = csvRecord.get("startPage");
+	            String end_page = csvRecord.get("endPage");
+	            
+	            names.add(name);
+	            keywords.add(keyword);
+	            Description.add(description);
+	            price.add(Double.parseDouble(Price));
+	            startPage.add(Integer.parseInt(start_page));
+	            endPage.add(Integer.parseInt(end_page));
+	            
+	            System.out.println("Record No - " + csvRecord.getRecordNumber());
+	            System.out.println("---------------");
+	            System.out.println("Name : " + name);
+	            System.out.println("keywords : " + keyword);
+	            System.out.println("Desc : " + description);
+	            System.out.println("Price : " + Price);
+	            System.out.println("---------------\n\n");
+	        }
+	       }
+		//ChapterServiceImpl service = new ChapterServiceImpl();
+		int x= saveChapters(names, keywords, Description, price, startPage, endPage, book);
+	    System.out.println(x);
+		}
+
+
+	@Override
+	public String saveCsv(MultipartFile file) throws IOException {
+		String destination = null;
+		if (!file.isEmpty()) {
+			byte[] bytes = file.getBytes();
+			String homeDir = System.getProperty("user.home");
+			destination = homeDir+"/ebooks/temp/chapters_details.csv";
+			File file2 = new File(destination);
+			if(!file2.getParentFile().isDirectory())
+			{
+				file2.getParentFile().mkdirs();
+			}
+			FileUtils.writeByteArrayToFile(file2, bytes);
+		}
+		return destination;
 	}
 	
 //	public Document getPdf(String loc) {

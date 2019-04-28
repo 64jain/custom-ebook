@@ -19,7 +19,7 @@ public class Chapter implements Serializable {
 	private int startPage;
 	private int endPage;
 	private String keywords;
-	private int price;
+	private double price;
 	@ManyToOne
 	private Book book;
 	private String loc;
@@ -59,10 +59,10 @@ public class Chapter implements Serializable {
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public Book getBook() {

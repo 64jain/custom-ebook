@@ -6,10 +6,13 @@
 <meta charset="UTF-8">
 <title>Buyer's Cart</title>
  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+	   rel = "stylesheet">
+	<script src = "https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src = "https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -44,25 +47,38 @@ body{
 }
 </style>
 <script>
+$(document).ready(function(){
+	$("tbody").sortable({
+		placeholder: "highlight",
+		update: function(event,ui) {
+			var tex = $("tbody").sortable('toArray').toString();
+			$("#tex").val(tex);
+			$("#tex").load();
+		}
+	});
+});
 function deletedata(id)
 {
-	$.ajax({ type :'POST',
-		contentType :"application/json",
-		url:"deletechapter/"+id,
-		success: function(data)
-		{
+	var confir = confirm("Are you sure you want to remove item from cart?");
+	if(confir==true) {
+		$.ajax({ type :'POST',
+			contentType :"application/json",
+			url:"deletechapter/"+id,
+			success: function(data)
+			{
+				
+			},
+			error: function(data)
+			{
+				
+			}
 			
-		},
-		error: function(data)
-		{
-			
-		}
-		
-	});
+		});	
+	}
+	
 }
-
-            
 </script>
+
 </head>
 <body background="/images/book1.jpeg" >
 	<!-- Navigation bar -->
@@ -90,6 +106,7 @@ function deletedata(id)
 	<!---------- end ----------------->
 	${error}
 	<div align="center">
+		
 		<form action="/saveEbookContent" method="post">
 			
 		<article>
@@ -103,14 +120,14 @@ function deletedata(id)
 							<td><div class="card" style="background-color:black;"><font color="white"><b>Book Name</b></font></div></td>
 							<td><div class="card" style="background-color:black;"><font color="white"><b>Chapter Name</b></font></div></td>
 							<td><div class="card" style="background-color:black;"><font color="white"><b>Price</b></font></div></td>
-							<td><div class="card" style="background-color:black;"><font color="white"><b>Serial Number</b></font></div></td>
+<!-- 							<td><div class="card" style="background-color:black;"><font color="white"><b>Serial Number</b></font></div></td> -->
 							<td><div class="card" style="background-color:black;"><font color="white"><b>Remove</b></font></div></td>
 						</tr>
 					</thead>
 					<tbody>
 
 						<c:forEach items="${ebooks}" var="ebook">
-							<tr>
+							<tr id="${ebook.id}">
 								<td> <input	type="hidden" name="ebookid" value="${ebook.id}" />
 								<div class="card" style="background-color:#FFD700;">
 								<script>
@@ -150,17 +167,17 @@ function deletedata(id)
 								
 								</script>
 								</div></td>
-								<td><div class="card"  style="background-color: #D3D3D3;">
-								<select name="sequence">
+<!-- 								<td><div class="card"  style="background-color: #D3D3D3;"> -->
+<!-- 								<select name="sequence"> -->
 										
-										<c:forEach begin="1" end="${size}" var="val">
+<%-- 										<c:forEach begin="1" end="${size}" var="val"> --%>
 											
-											<option  value="${val}">${val}</option>
+<%-- 											<option  value="${val}">${val}</option> --%>
 											
-										</c:forEach>
-								</select>
-								</div>
-								</td>
+<%-- 										</c:forEach> --%>
+<!-- 								</select> -->
+<!-- 								</div> -->
+<!-- 								</td> -->
 								<td>
 								<button  class="button button2" onclick="deletedata(${ebook.id})">Delete</button>
 									</td>
@@ -170,11 +187,16 @@ function deletedata(id)
 				</table>
 			</div>
 		</article>
-		<button class="button button2" style="background-color:#4682B4;"type="submit">Save</button>
+		<br>
+		<br/>
+		<br/>
+		<input type="text" id="tex" name="sequence_string" hidden/>
+		<button class="button button2" style="background-color:#4682B4;"type="submit">Save Sequence</button>
 	
 	</form>
 	
 	<button class="button button2" style="background-color: #CD853F;" onclick="location.href='/payment'">Buy and Pay</button>
 	</div>
+	
 </body>
 </html>

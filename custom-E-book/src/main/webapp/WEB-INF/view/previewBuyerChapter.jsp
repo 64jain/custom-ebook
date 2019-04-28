@@ -18,10 +18,20 @@
     	var chapter_id = $("#chapter_id").val();
     	var innerHtml = "<iframe src=\"getpdf1?id="+chapter_id+"\" style=\"position : absolute;top: 0;right: 0;height: 100%;width: 50%;\"></iframe>";
     	$("#preview_button").click(function(){
-    		alert(innerHtml);
     		$("#preview").html(innerHtml);
     	});
     	$("#preview").load(location.href + " #preview");
+    	
+    	$("#addToCart").click(function(){
+    		$.ajax({
+    			url: "addChapterToCart",
+    			data: {chapterId: chapter_id},
+    			success: function(str) {
+    				$("#tick_mark").show();
+    				alert("chapter was successfully added to the cart");
+    			}
+    		});
+    	});
     });
 </script>
  <style>
@@ -47,6 +57,8 @@ body{
 				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+			<li><a href="/myOrders"><span class="glyphicon glyphicon-list-alt"></span>
+						My Orders</a></li>
 			<li><a href="/showEbookContent"><span class="glyphicon glyphicon-shopping-cart"></span>
 						Cart</a></li>
 				<li><a href="/logoutBuyer"><span class="glyphicon glyphicon-log-out"></span>
@@ -81,6 +93,7 @@ body{
   </ul>
 </div>
  <button type="button" class="btn btn-info" id="preview_button" style="margin-left: 20%">preview</button>
+ <button type="button" class="btn btn-success" id="addToCart" >Add to Cart</button> <img alt="added to cart" id="tick_mark" src="/images/tick.png" width="42" height="42" hidden="true">
  <input type="number" id="chapter_id" value="${chapter.id}" hidden="true">
 </div>
 </div>

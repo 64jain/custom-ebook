@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <meta charset="UTF-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,7 +15,7 @@
   box-sizing: border-box;
 }
  .modal-header, h4, .close {
-    background-color: #5cb85c;
+    background-color: #6495ED;
     color:white !important;
     text-align: center;
     font-size: 30px;
@@ -88,8 +89,47 @@ body {
 }
 }
     </style>
+    
+    
 </head>
 <body>
+<!-- -----------------Displaying error-------------------------------- -->
+<div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Error while Login</h4>
+        </div>
+        <div class="modal-body">
+          <p>${error}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <c:set var="err" value= "Invalid username or password" /> 
+<c:set var="error" value="${error}" /> 
+ <c:choose> 
+   <c:when test="${error==err}">
+   <script>
+  
+   $('#errorModal').modal();
+     </script> 
+    </c:when> 
+     <c:otherwise> 
+     <script>
+   $('#errorModal').modal("hide");
+     
+     </script>
+     </c:otherwise>    
+ </c:choose> 
+<!-- -----------------Displaying error-------------------------------- -->
 <!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -105,14 +145,7 @@ body {
 		</div>
 	</nav>
 	<!---------- end ----------------->
-<!--  <div class="topnav"> -->
-<!--   <a href="/">Home</a> -->
-<!--     <a href="/regBuyerPublisher">Register</a> -->
-<!-- </div> -->
 
-<!-- <div class="header"> -->
-<!-- <div id="headerimg"  style="background-image:url(/images/login1.jpg);height:290px; background-repeat:no-repeat;object-fit:cover;padding-top:-16px;margin-top:-16px;padding-bottom:-16px;margin-bottom:-16px;padding-left:-16px;margin-left:-16px;padding-right:-16px;margin-right:-16px;"> -->
-<!--  </div> -->
 
 <div class="row">
   <div class="column side" style="padding-left:1.8%;">
@@ -148,20 +181,18 @@ body {
           
            <div class="form-group">
              <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" />
+             <input type="text" id="buyer_login" class="form-control" name="loginId" placeholder="Enter LoginId" required/>
              </div>
              
               <div class="form-group">
               <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-             <input type="password" class="form-control" name="password" placeholder="Enter Password" />
+             <input type="password" class="form-control" name="password" placeholder="Enter Password" required/>
             </div>
-              <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
+              
             
           <!--   <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a></p>--->
             
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login!!</button>
+              <button type="submit" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span><font color="white">Login!!</font></button>
           </form>
         </div>
         <div class="modal-footer">
@@ -187,20 +218,17 @@ body {
           
            <div class="form-group">
              <label for="loginId"><span class="glyphicon glyphicon-user"></span>Login ID</label>
-             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" />
+             <input type="text" class="form-control" name="loginId" placeholder="Enter LoginId" required/>
              </div>
              
               <div class="form-group">
               <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-             <input type="password" class="form-control" name="password" placeholder="Enter Password" />
-            </div>
-              <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
+             <input type="password" class="form-control" name="password" placeholder="Enter Password" required/>
             </div>
             
           <!--   <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a></p>--->
             
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login!!</button>
+              <button type="submit" class="btn btn-success btn-block" style="background-color:#6495ED;"><span class="glyphicon glyphicon-off"></span> Login!!</button>
           </form>
         </div>
         <div class="modal-footer">

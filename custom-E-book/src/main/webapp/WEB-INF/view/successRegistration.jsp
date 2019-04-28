@@ -21,7 +21,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/">Main Home Page</a></li>
 				
-				<li><a href="#">About</a></li>
+				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/logoutBuyer"><span class="glyphicon glyphicon-log-out"></span>

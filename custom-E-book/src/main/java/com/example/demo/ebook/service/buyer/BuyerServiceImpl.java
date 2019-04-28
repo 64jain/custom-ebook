@@ -8,13 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.ebook.model.buyer.Buyer;
+import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.repository.buyer.BuyerRepository;
+import com.example.demo.ebook.repository.payment.paymentRepository;
 
 @Service
 public class BuyerServiceImpl implements BuyerService {
 
 	@Autowired
 	BuyerRepository repository;
+	@Autowired
+	paymentRepository pay_repository;
 
 	@Override
 	public int registerBuyer(Buyer buyer) {
@@ -44,7 +48,23 @@ public class BuyerServiceImpl implements BuyerService {
 		String path = System.getProperty("user.home")+"/ebooks/buyer_"+buyer.getId()+"/Books";
 		File[] files = new File(path).listFiles();
 		List<File> files_list = Arrays.asList(files);
-		System.out.println(files_list.get(0));
 		return files_list;
 	}
+
+	@Override
+	public List<Payment> buyerPayments(Buyer buyer) {
+		List<Payment> payments = pay_repository.findByBuyer(buyer);
+		return payments;
+	}
+
+	@Override
+	public boolean checkLoginExists(String login) {
+		List<Buyer> buyers = repository.findByLoginId(login);
+		if (buyers.size() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 }

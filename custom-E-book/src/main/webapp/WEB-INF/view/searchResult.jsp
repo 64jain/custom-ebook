@@ -16,6 +16,23 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="/js/search2.js"></script>
+	<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+  $("#myInput2").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#myTable2 tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+});
+</script>
 <style>
 body {
 
@@ -73,6 +90,8 @@ form.example::after {
 				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+			<li><a href="/myOrders"><span class="glyphicon glyphicon-list-alt"></span>
+						My Orders</a></li>
 			<li><a href="/showEbookContent"><span class="glyphicon glyphicon-shopping-cart"></span>
 						Cart</a></li>
 				<li><a href="/logoutBuyer"><span class="glyphicon glyphicon-log-out"></span>
@@ -101,7 +120,10 @@ form.example::after {
 					<c:when test="${not empty books}">
 						<article>
 							<div class="container">
-								<table class="table" style="border-style: double;border-color: black;">
+<!-- 							<input type="text" id="search2" placeholder="Type to search"> -->
+								
+								<input class="form-control" id="myInput" type="text" placeholder="Filter Books...." style="width:25%;margin-top:0.7%;margin-bottom: -1%"><br>
+								<table class="table table-bordered table-striped" style="border-style: double;border-color: black;">
 									<thead>
 									<tr >
 										<th></th>
@@ -109,7 +131,7 @@ form.example::after {
 										<th>Price</th>
 									</tr>
 									</thead>
-									<tbody>
+									<tbody id="myTable">
 										<c:forEach items="${books}" var="book">
 											<tr>
 												<th scope="row">
@@ -147,6 +169,7 @@ form.example::after {
 				<c:choose>
 					<c:when test="${not empty chapters}">
 						<article>
+						<input class="form-control" id="myInput2" type="text" placeholder="Filter...." style="width:25%;margin-top:0.7%;margin-bottom: -1%"><br>
 								<table class="table "style="border-style: double;border-color: black;">
 									<thead>
 									<tr>
@@ -156,7 +179,7 @@ form.example::after {
 										<th>Price</th>
 									</tr>
 									</thead>
-									<tbody>
+									<tbody id="myTable2">
 										<c:forEach items="${chapters}" var="chapter">
 											<tr>
 												<th scope="row">

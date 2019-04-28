@@ -12,12 +12,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <title>Configure Chapters</title>
 <style>
-body{
+body, html {
    background-image:radial-gradient(white, grey);
    /*url("/images/white_bg2.jpg"); */
  
    background-size:cover;
    background-repeat:no-repeat;
+   
 }
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -97,6 +98,7 @@ body{
 // 			alert("id = "+id + " start page = "+startPage+" endPage = "+endPage);
 		});
 	});
+<<<<<<< HEAD
 	
 	$(document).ready(function() {
   $("#scroll").click(function(e)  {
@@ -111,38 +113,73 @@ var div="div_i";
   });
 });
 </script>
+=======
+	</script>
+	<script>
+	function scrollDown(i)
+	{ var index=i+1;
+	var n = index.toString();
+	 document.getElementById(n).scrollIntoView(true);
+	}
+	</script>
+	<script>
+	function scrollUp(i)
+	{ var index=i-1;
+	var n = index.toString();
+	 document.getElementById(n).scrollIntoView(true);
+	}
+	</script>
+>>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 
 </head>
 <body>
 <!---------------------NavBar opening -------------------------->
+<!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Configure Chapters</a>
+				<a class="navbar-brand" href="/pubHome"> CustomEbooks </a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
-				<li><a href="#">About</a></li>
+				<li class="active">
+				<li><a href="/pubHome">Home</a></li>
+				<li><a href="/about">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/logoutPublisher"><span class="glyphicon glyphicon-log-in"></span>
+			
+				<li><a href="/logoutPublisher"><span class="glyphicon glyphicon-log-out"></span>
 						Logout</a></li>
+						
 			</ul>
 		</div>
 	</nav>
-	<!---------------------NavBar ending -------------------------->
+	<!---------- end ----------------->
 	
-	<form action="saveChapters" method="post">
+	
+	
 	<div class="container-fluid" style="width:55%" align="center">
   <h1 style="font-family:Georgia;"><b>CONFIGURE CHAPTERS</b></h1>
-  
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#menu1">Manual Configuration</a></li>
+    <li><a data-toggle="pill" href="#menu2">Upload CSV</a></li>
+  </ul>
+  <div class="tab-content">
+	  <div id="menu1" class="tab-pane fade in active">
+  			<form action="saveChapters" method="post">
 			<input type="number" name="bookId" value="${book.id}" hidden="true"/>
 			<input type="number" name="noOfChapters" value="${book.noOfChapters}" hidden="true"/>
 			<input type="number" id="totalNoOfPages" name="totalNoOfPages" value="${book.totalNoOfPages}" hidden="true"/>
 			<input type="text" id="bookLoc" name="bookLoc" value="${book.bookLoc}" hidden="true"/>
+	
+  
+  	
 		<c:forEach var="i" begin="1" end="${book.noOfChapters}">
 		
+<<<<<<< HEAD
 		<div class="jumbotron jumbotron-fluid" id="div_${i}">
+=======
+		<div class="jumbotron jumbotron-fluid" id="${i}">
+>>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 			<h3><b>Chapter ${i} </b></h3>
 			  <div class="row">
 					<div class="col-sm-4 card" style="background-color: lavender;">
@@ -150,7 +187,7 @@ var div="div_i";
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="text" name="name_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -158,8 +195,8 @@ var div="div_i";
 						<b>PRICE</b>
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
-						<input type="number"  name="price_${i}" min="0"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+						<input type="number" step="any" name="price_${i}" min="0"
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -176,7 +213,7 @@ var div="div_i";
 					</div>
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="text"   name="keywords_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 				<div class="row">
@@ -186,7 +223,7 @@ var div="div_i";
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="number" min="1" max="${book.totalNoOfPages}"
 				name="start_page_${i}" id="start_page_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div>
 					<div class="row">
@@ -196,22 +233,69 @@ var div="div_i";
 					<div class="col-sm-6 card" style="background-color: lavenderblush;">
 						<input type="number" min="1" max="${book.totalNoOfPages}"
 				name="end_page_${i}" id="end_page_${i}"
-							style="font-size: 12pt; height: 40px; width: 280px;" />
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
 					</div>
 				</div> 
+<<<<<<< HEAD
 				<br> <button type="button" id="${i}">preview</button> <br>
+=======
+				<br> <button type="button" class="btn btn-info" id="${i}">preview</button> <br>
+>>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 				<div  class="loader" id="spin_${i}" hidden="true"></div>
 			<img src="" hidden="true" id="start_img_${i}" height="200" width="150">
 			<img src="" hidden="true" id="end_img_${i}" height="200" width="150">
 			<br>
+<<<<<<< HEAD
 			<br>
 			
+=======
+					<c:set var="totalbooks" value="${book.noOfChapters}" />
+					<c:choose>
+						<c:when test="${i==totalbooks}">
+						<button type="button" class="btn btn-info" onclick="scrollUp(${i})">Previous</button>
+						</c:when>
+						<c:when test="${i==1}">
+						<button type="button" class="btn btn-info"  onclick="scrollDown(${i})">Next</button>
+						</c:when>
+						<c:otherwise>
+						<button type="button" class="btn-btn-info"onclick="scrollUp(${i})">Previous</button>
+						<button type="button" class="btn btn-info" onclick="scrollDown(${i})">Next</button>
+						</c:otherwise>
+					</c:choose>
+					
+>>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 			</div>
+<<<<<<< HEAD
 			<button type="button" id="button_${i}" onclick="scrollDown(${i})"></button>
+=======
+			
+>>>>>>> branch 'shreyansh' of https://github.com/64jain/custom-ebook.git
 		</c:forEach>
-		
 		<input class="button button2" type="submit" value="configure chapters">
+		</form>
 		</div>
-	</form>
+		<div id="menu2" class="tab-pane fade">
+			<div class="jumbotron jumbotron-fluid">
+				<form action="csvUpload" method="post" enctype="multipart/form-data">
+				<input type="number" name="id" value="${book.id}" hidden="true"/>
+				<div class="row">
+				<div class="col-sm-4 card" style="background-color: lavender;">
+						<b>Upload CSV </b>
+					</div>
+					<div class="col-sm-6 card" style="background-color: lavenderblush;">
+						<input type="file" name="file" accept=".csv"
+							style="font-size: 12pt; height: 40px; width: 280px;" required/>
+					</div>
+					</div>
+					<div class="row">
+						<input class="button button2" type="submit" value="configure chapters">
+						
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	
 </body>
 </html>
