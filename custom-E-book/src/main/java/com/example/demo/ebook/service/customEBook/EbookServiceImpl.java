@@ -8,10 +8,16 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.swing.table.TableStringConverter;
 import javax.swing.text.DefaultEditorKit.CutAction;
 import javax.xml.parsers.ParserConfigurationException;
@@ -49,6 +55,7 @@ public class EbookServiceImpl implements EbookService {
 	EbookRepository ebook_repository;
 	@Autowired
 	paymentRepository payment_repository;
+	
 	// CustomEBook ebook;
 	// Chapter chapter;
 
@@ -56,6 +63,90 @@ public class EbookServiceImpl implements EbookService {
 	public List<CustomEBook> showContent(Buyer buyer) {
 		List<CustomEBook> ebooks = repository.findByBuyerOrderBySequence(buyer);
 		return ebooks;
+	}
+
+	@Override
+	public List<Book> findRecommendedBooks(Buyer buyer) {
+		Map<Integer, Integer> books_map = new HashMap<Integer, Integer>();
+		List<Book> book = new ArrayList<>();
+		List<CustomEBook> ebooks = repository.findByBuyerOrderBySequence(buyer);
+		System.out.println("*******EBOOK******"+ebooks.size());
+			Set<Integer> books_set = new HashSet<Integer>();
+			if(ebooks.size()>0) {
+				for (int i = 0; i < ebooks.size(); i++)
+					books_set.add(ebooks.get(i).getBook().getId());
+				for (int i = 0; i < ebooks.size(); i++) {
+					Book bi = ebooks.get(i).getBook();
+					String keywords = bi.getKeywords();
+					String[] keywordList = keywords.split(",");
+					for (String keyword : keywordList) {
+						List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
+						for (int j = 0; j < books_temp.size(); j++) {
+							int bj = books_temp.get(j).getId();
+							System.out.println("***************************");
+							System.out.println("book for " + keyword + " is" + bj);
+							System.out.println("***************************");
+							Book disabledBook=book_repository.findById(bj).get();
+							if(!disabledBook.isDisabled())
+							{
+								if (books_map.get(bj)!=null )
+									books_map.put(bj, books_map.get(bj) + 1);
+								else
+									books_map.put(bj, 1);
+							}
+							
+						}
+
+					}
+				}
+			}
+		
+		List<Payment>payments= payment_repository.findByBuyer(buyer);
+		Set<Integer> payment_set = new HashSet<Integer>();
+		if(payments.size()>0) {
+			for(int i=0;i<payments.size();i++)
+				payment_set.add(payments.get(i).getId());
+			
+			for(int i=0;i<payments.size();i++) {
+				String keywords=payments.get(i).getKeywords();
+				String[] keywordList = keywords.split(",");
+				for (String keyword : keywordList) {
+					List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
+					for (int j = 0; j < books_temp.size(); j++) {
+						int bj = books_temp.get(j).getId();
+						System.out.println("***************************");
+						System.out.println("book for " + keyword + " is" + bj);
+						System.out.println("***************************");
+						Book disabledBook=book_repository.findById(bj).get();
+						if(!disabledBook.isDisabled())
+						{
+							if (books_map.get(bj)!=null )
+								books_map.put(bj, books_map.get(bj) + 1);
+							else
+								books_map.put(bj, 1);
+						}
+						
+					}
+				}
+			}
+			
+		}
+			if(books_map.size()>0)
+			{
+				for (Integer b : books_map.keySet()) {
+					
+						if((books_set!=null)&& (books_set.contains(b)==false) )
+						{
+							System.out.println("***************************");
+							System.out.println("added book: " + b);
+							System.out.println("***************************");
+							book.add((Book)(book_repository.findById(b.intValue()).get()));
+						}
+						
+					}		
+				}
+			
+		return book;
 	}
 
 	@Override
@@ -92,8 +183,7 @@ public class EbookServiceImpl implements EbookService {
 	}
 
 	@Override
-	public void savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,
-			String paymentMethod,String title) {
+	public Payment savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,String paymentMethod) {
 		Payment payment = new Payment();
 		payment.setName(name);
 		payment.setEmail(email);
@@ -108,8 +198,8 @@ public class EbookServiceImpl implements EbookService {
 		long millis=System.currentTimeMillis();  
 		Date date=new Date(millis);  
 		payment.setPurchaseDate(date);
-		payment.setTitle(title);
-		payment_repository.save(payment);
+		Payment save = payment_repository.save(payment);
+		return save;
 	}
 
 	public List<Book> getBooks(String keywords) {
@@ -205,7 +295,7 @@ public class EbookServiceImpl implements EbookService {
 	}
 
 	@Override
-	public void mergePdf(Buyer buyer, boolean preview, String title) {
+	public String mergePdf(Buyer buyer, boolean preview, String title) {
 		String homeDir = System.getProperty("user.home");
 		System.out.println(homeDir);
 		String buyerDir = null;
@@ -281,6 +371,7 @@ public class EbookServiceImpl implements EbookService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return destination;
 	}
 
 	public String createPage(Chapter chapter, Book book, int i) throws IOException {

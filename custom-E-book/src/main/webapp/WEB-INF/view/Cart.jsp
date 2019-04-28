@@ -180,9 +180,7 @@ function deletedata(id)
 <!-- 								</td> -->
 								<td>
 								<button  class="button button2" onclick="deletedata(${ebook.id})">Delete</button>
-								
 									</td>
-
 							</tr>
 						</c:forEach>
 					</tbody>

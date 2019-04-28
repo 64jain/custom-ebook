@@ -12,4 +12,5 @@ public interface BookRepository extends CrudRepository<Book, Integer>{
 	List<Book> findByDisabledAndKeywordsContaining(boolean isDisable,String keywords);
 	List<Book> findByPublisher(Publisher publisher);
 	List<Book> findByIdIn(List<Integer> books_id);
+	
 }

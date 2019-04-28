@@ -22,8 +22,10 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
+import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.service.customEBook.EbookService;
 import com.example.demo.ebook.service.customEBook.SendEmail;
+import com.example.demo.ebook.service.orderedEbook.OrderedEbookService;
 
 
 @Controller
@@ -31,6 +33,8 @@ public class EbookController {
 	
 	@Autowired
 	EbookService service;
+	@Autowired
+	OrderedEbookService order_service;
 
 	@RequestMapping(value = "/showEbookContent")
 	public String ShowContent(ModelMap map,HttpSession session)
@@ -138,10 +142,14 @@ public class EbookController {
 		double total=0;
 		@SuppressWarnings("unused")
 		int totalPages=0;
+		String keywords="";
 		for(int i=0;i<list.size();i++)
 		{
 			if(list.get(i).getChapter()==null)
-			{
+			{	if(i==0)
+					keywords=list.get(0).getBook().getKeywords();
+				else
+					keywords=keywords+","+list.get(i).getBook().getKeywords();
 				total+=list.get(i).getBook().getPrice();
 				totalPages+=list.get(i).getBook().getTotalNoOfPages();
 			}
@@ -154,12 +162,13 @@ public class EbookController {
 		double hardCopyPrice = total+totalPages*0.5 +30;
 		service.mergePdf(buyer, true,"");    //for creating ebook preview
 		map.addAttribute("price", total);
+		map.addAttribute("keywords",keywords);
 		map.addAttribute("hardCopyPrice", hardCopyPrice);
 		return "Payment";
 	}
 	@RequestMapping("/paymentPage")
 	public String paymentPage(ModelMap map,HttpSession session,@RequestParam( value="price",required=false) String price,
-								@RequestParam(value="hardCopyPrice",required=false) String hardCopyPrice)
+								@RequestParam(value="hardCopyPrice",required=false) String hardCopyPrice,@RequestParam("keywords") String keywords)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if(buyer==null)
@@ -168,6 +177,7 @@ public class EbookController {
 		{
 			map.addAttribute("price",price);
 			map.addAttribute("hardCopyPrice",hardCopyPrice);
+			map.addAttribute("keywords",keywords);
 			System.out.println(hardCopyPrice);	
 			System.out.println(price);
 		}
@@ -177,7 +187,7 @@ public class EbookController {
 	}
 	
 	@RequestMapping("/successPayment")
-	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("paymentMethod")String paymentMethod,@RequestParam("title") String title)
+	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("keywords") String keywords,@RequestParam("paymentMethod")String paymentMethod,@RequestParam("title") String title)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if(buyer==null)
@@ -191,8 +201,10 @@ public class EbookController {
 		System.out.println(copy_type);
 		System.out.println(paymentMethod);
 		System.out.println("********************************************************");
-		service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod,title);
-		service.mergePdf(buyer,false,title);
+		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
+		
+		String location=service.mergePdf(buyer,false,title);
+		order_service.saveOrder(buyer, payment, location);
 		//String filename="/home/samridhi/mid.pdf";
 		//SendEmail s=new SendEmail(price,filename);
 		service.deleteContentAfterSave(buyer);
@@ -245,5 +257,14 @@ public class EbookController {
 		chapterList.add(chapterId);
 		service.saveEBook(null, chapterList, buyer);
 		return "";
+	}
+	
+	@RequestMapping(value="/recommendedBooks", method=RequestMethod.POST)
+	public void showRecommendedBooks(HttpSession session,ModelMap map)
+	{
+		Buyer buyer = (Buyer)session.getAttribute("buyer");
+		List<Book> books= service.findRecommendedBooks(buyer);
+		map.addAttribute("books",books);
+		
 	}
 }

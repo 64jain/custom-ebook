@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Buyer Home</title>
- <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!--   <link rel="stylesheet" -->
+<!-- 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet"/> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 <title>Buyer Home</title>
 <style>
 body,html{
@@ -37,7 +44,12 @@ body,html{
 
 /* 	  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); */
 /* 	} */
-
+.list-group-item {
+background-color: transparent;
+border-top: 1px solid #ddd;
+border-radius: 0;
+color: #fff;
+}
 
 * {
   box-sizing: border-box;
@@ -92,6 +104,7 @@ form.example button:hover {
 		}
 	});
 </script>
+
 </head>
 <body background="/images/book_index.jpg" >
 	
@@ -131,5 +144,28 @@ form.example button:hover {
 			Search
 		</button>
 	</form>
-	</body>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+<div class="container" id="recommendedBooks">
+
+			<div class="panel-group" style="width:30%; margin-left:32%;">
+				
+				 <div class="panel panel-info">
+      <div class="panel-heading"><h2 align="center" style="color:red;"><b><i>Books you might like </i></b></h2></div>
+      <c:forEach items="${books}" var="temp">
+      <div class="panel-body" style=" background-color:transparent;"><a href="previewBuyerBook?id=${temp.id}" style="color:dark grey;"><center><b><font size="3">${temp.bookName}</font></b></center></a></div>
+  
+    </c:forEach>
+    </div>
+    
+    	</div>	
+    	</div>
+				<!-- 	<ul class="list-group" style="width:28%;margin-left:35%;" > -->
+				<%--     <li class="list-group-item" style="background-color: transparent;border: 1px solid black;border-radius: 8px;color:white;"><a href="previewBuyerBook?id=${temp.id}" style="color:dark grey;"><center><b><font size="5">${temp.bookName}</font></b></center></a></li> --%>
+
+<!-- 				</ul> -->
+			</body>
 </html>
