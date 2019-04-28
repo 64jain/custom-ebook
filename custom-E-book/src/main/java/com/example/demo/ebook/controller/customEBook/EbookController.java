@@ -22,8 +22,10 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
+import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.service.customEBook.EbookService;
 import com.example.demo.ebook.service.customEBook.SendEmail;
+import com.example.demo.ebook.service.orderedEbook.OrderedEbookService;
 
 
 @Controller
@@ -31,6 +33,8 @@ public class EbookController {
 	
 	@Autowired
 	EbookService service;
+	@Autowired
+	OrderedEbookService order_service;
 
 	@RequestMapping(value = "/showEbookContent")
 	public String ShowContent(ModelMap map,HttpSession session)
@@ -197,8 +201,10 @@ public class EbookController {
 		System.out.println(copy_type);
 		System.out.println(paymentMethod);
 		System.out.println("********************************************************");
-		service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod,title,keywords);
-		service.mergePdf(buyer,false,title);
+		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
+		
+		String location=service.mergePdf(buyer,false,title);
+		order_service.saveOrder(buyer, payment, location);
 		//String filename="/home/samridhi/mid.pdf";
 		//SendEmail s=new SendEmail(price,filename);
 		service.deleteContentAfterSave(buyer);

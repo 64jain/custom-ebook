@@ -14,16 +14,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
+import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.model.publisher.Publisher;
 import com.example.demo.ebook.repository.book.BookRepository;
 import com.example.demo.ebook.repository.buyer.BuyerRepository;
 import com.example.demo.ebook.repository.chapter.ChapterRepository;
 import com.example.demo.ebook.repository.customEBook.EbookRepository;
+import com.example.demo.ebook.repository.payment.paymentRepository;
 import com.example.demo.ebook.repository.publisher.PublisherRepository;
 import com.example.demo.ebook.service.book.BookService;
 import com.example.demo.ebook.service.buyer.BuyerService;
 
 import com.example.demo.ebook.service.customEBook.EbookService;
+import com.example.demo.ebook.service.orderedEbook.OrderedEbookService;
 import com.example.demo.ebook.service.chapter.ChapterFileUpload;
 import com.example.demo.ebook.service.chapter.ChapterService;
 
@@ -149,7 +152,7 @@ public class CustomEBookApplicationTests {
 		}	
 	}
 	
-	@Test
+	//@Test
 	public void getRecommendedBooks()
 	{
 		EbookService service = context.getBean(EbookService.class);
@@ -171,5 +174,15 @@ public class CustomEBookApplicationTests {
 //		}
 		System.out.println("size of books:"+book.size());
 		
+	}
+	@Test
+	public void saveOrder()
+	{   OrderedEbookService order_service = context.getBean(OrderedEbookService.class);
+		paymentRepository payment_repo = context.getBean(paymentRepository.class);
+		BuyerRepository buyer_repo = context.getBean(BuyerRepository.class);
+		String location="/home/sam/sam.pdf";
+		Optional<Buyer> buyer = buyer_repo.findById(4);
+		 Optional<Payment> payment = payment_repo.findById(1);
+		order_service.saveOrder(buyer.get(), payment.get(), location);
 	}
 }

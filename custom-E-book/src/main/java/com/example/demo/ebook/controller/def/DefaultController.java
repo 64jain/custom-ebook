@@ -60,13 +60,17 @@ public class DefaultController {
 	public String loginBuyerPublisher(ModelMap map, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
-		if (session.getAttribute("id") != null) {
-			if(session.getAttribute("publisher")!=null) {
-				return "redirect:pubHome";
+		if(session!=null)
+		{
+			if (session.getAttribute("id") != null) {
+				if(session.getAttribute("publisher")!=null) {
+					return "redirect:pubHome";
+				}
+				else if (session.getAttribute("buyer")!=null) {
+					return "redirect:buyHome";
+				}
 			}
-			else if (session.getAttribute("buyer")!=null) {
-				return "redirect:buyHome";
-			}
+			
 		}
 		
 		map.addAttribute("error", "");

@@ -86,10 +86,15 @@ public class EbookServiceImpl implements EbookService {
 							System.out.println("***************************");
 							System.out.println("book for " + keyword + " is" + bj);
 							System.out.println("***************************");
-							if (books_map.get(bj)!=null )
-								books_map.put(bj, books_map.get(bj) + 1);
-							else
-								books_map.put(bj, 1);
+							Book disabledBook=book_repository.findById(bj).get();
+							if(!disabledBook.isDisabled())
+							{
+								if (books_map.get(bj)!=null )
+									books_map.put(bj, books_map.get(bj) + 1);
+								else
+									books_map.put(bj, 1);
+							}
+							
 						}
 
 					}
@@ -112,10 +117,15 @@ public class EbookServiceImpl implements EbookService {
 						System.out.println("***************************");
 						System.out.println("book for " + keyword + " is" + bj);
 						System.out.println("***************************");
-						if (books_map.get(bj)!=null )
-							books_map.put(bj, books_map.get(bj) + 1);
-						else
-							books_map.put(bj, 1);
+						Book disabledBook=book_repository.findById(bj).get();
+						if(!disabledBook.isDisabled())
+						{
+							if (books_map.get(bj)!=null )
+								books_map.put(bj, books_map.get(bj) + 1);
+							else
+								books_map.put(bj, 1);
+						}
+						
 					}
 				}
 			}
@@ -173,7 +183,7 @@ public class EbookServiceImpl implements EbookService {
 	}
 
 	@Override
-	public void savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,String paymentMethod,String title,String keywords) {
+	public Payment savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,String paymentMethod) {
 		Payment payment = new Payment();
 		payment.setName(name);
 		payment.setEmail(email);
@@ -185,12 +195,11 @@ public class EbookServiceImpl implements EbookService {
 			payment.setHardCopy(false);
 		payment.setPrice(Double.parseDouble(price));
 		payment.setPayment_method(paymentMethod);
-		payment.setKeywords(keywords);
 		long millis=System.currentTimeMillis();  
 		Date date=new Date(millis);  
 		payment.setPurchaseDate(date);
-		payment.setTitle(title);
-		payment_repository.save(payment);
+		Payment save = payment_repository.save(payment);
+		return save;
 	}
 
 	public List<Book> getBooks(String keywords) {
@@ -277,7 +286,7 @@ public class EbookServiceImpl implements EbookService {
 	}
 
 	@Override
-	public void mergePdf(Buyer buyer, boolean preview, String title) {
+	public String mergePdf(Buyer buyer, boolean preview, String title) {
 		String homeDir = System.getProperty("user.home");
 		System.out.println(homeDir);
 		String buyerDir = null;
@@ -353,6 +362,7 @@ public class EbookServiceImpl implements EbookService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return destination;
 	}
 
 	public String createPage(Chapter chapter, Book book, int i) throws IOException {
