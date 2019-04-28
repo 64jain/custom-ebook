@@ -54,7 +54,7 @@ public class SendEmail {
          msg.setSubject("Book purchased: "+payment.getTitle());
        
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Hola!You've purchased your custom-ebook worth Rs"+payment.getPrice()+".Thanks for Shopping!!");
+        messageBodyPart.setText("Hola! You've purchased your custom-ebook worth Rs"+payment.getPrice()+".Thanks for Shopping!!");
          Multipart multipart = new MimeMultipart();
 
          // Set text message part
@@ -64,7 +64,7 @@ public class SendEmail {
          messageBodyPart = new MimeBodyPart();
          DataSource source = new FileDataSource(filename);
          messageBodyPart.setDataHandler(new DataHandler(source));
-         messageBodyPart.setFileName(filename);
+         messageBodyPart.setFileName(payment.getTitle());
          multipart.addBodyPart(messageBodyPart);
 
          // Send the complete message parts

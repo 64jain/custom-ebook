@@ -11,9 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 body{
-   background-image:radial-gradient(white, grey);
-   /*url("/images/white_bg2.jpg"); */
- 
+
    background-size:cover;
    background-repeat:no-repeat;
 }
@@ -60,7 +58,7 @@ body{
 	</script>
 
 </head>
-<body>
+<body  background="/images/book16.jpg">
 <!---------------------NavBar opening -------------------------->
 <!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
