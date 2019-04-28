@@ -15,9 +15,6 @@
 
     <style>
    * {
-   .w3-lobster {
-  font-family: "Lobster", Sans-serif;
-}
    
   box-sizing: border-box;
 }
@@ -88,6 +85,7 @@ background-size:cover;
 
 /* Middle column */
 .column.middle {
+margin-top: 2.4%;
   width:38%;
 }
 

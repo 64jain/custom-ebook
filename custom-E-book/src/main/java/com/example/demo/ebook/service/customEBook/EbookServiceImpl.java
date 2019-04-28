@@ -199,6 +199,7 @@ public class EbookServiceImpl implements EbookService {
 		payment.setEmail(email);
 		payment.setBuyer(buyer);
 		payment.setBuyer_addr(addr);
+		payment.setTitle(title);
 		if (copy_type.equals("HardCopy"))
 			payment.setHardCopy(true);
 		else
@@ -218,7 +219,7 @@ public class EbookServiceImpl implements EbookService {
 		List<Book> books = new ArrayList<>();
 		Set<Book> books_set = new LinkedHashSet<>();
 		for (String keyword : keywordList) {
-			List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
+			List<Book> books_temp = book_repository.findByDisabledAndKeywordsContaining(false,keyword);
 			if (books_temp != null)
 				books_set.addAll(books_temp);
 		}
@@ -237,7 +238,16 @@ public class EbookServiceImpl implements EbookService {
 		for (String keyword : keywordList) {
 			List<Chapter> chapters_temp = chap_repository.findByKeywordsContaining(keyword);
 			if (chapters_temp != null)
-				chapters_set.addAll(chapters_temp);
+			{
+				for(Chapter chap:chapters_temp)
+				{
+					if(!chap.getBook().isDisabled())
+					{
+						chapters_set.add(chap);
+					}
+				}
+//				chapters_set.addAll(chapters_temp);
+			}
 		}
 		chapters.addAll(chapters_set);
 		if (chapters.size() == 0)
@@ -488,13 +498,5 @@ public class EbookServiceImpl implements EbookService {
 
 		return filepath;
 	}
-
-	/*
-	 * @Override public String customizeContent(Buyer
-	 * buyer,List<Chapter>chapters,int ebookid) {
-	 * 
-	 * 
-	 * return "ebook content updated"; }
-	 */
 
 }

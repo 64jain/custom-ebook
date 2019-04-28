@@ -14,8 +14,16 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <title>Payment Page</title>
+<style>
+body {
+
+   background-size:cover;
+   background-repeat:no-repeat;
+}
+
+</style>
 </head>
-<body>
+<body background="/images/payment.jpg">
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -226,7 +234,7 @@
 				</div>
 			</div>
 			<input type="hidden" name="price" value="${price}" /> 
-<input type="submit" value="Buy Now" />
+<input type="submit" class="btn btn-primary" value="Buy Now" />
 				</div>
 	</form>
 

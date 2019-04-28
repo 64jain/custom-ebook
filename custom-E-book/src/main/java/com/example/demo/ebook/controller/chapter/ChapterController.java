@@ -26,6 +26,8 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.service.book.BookService;
 import com.example.demo.ebook.service.chapter.ChapterService;
+import com.google.common.io.ByteProcessor;
+import com.google.common.primitives.Bytes;
 
 @Controller
 public class ChapterController {
@@ -143,12 +145,22 @@ public class ChapterController {
 
 	    headers.setContentType(MediaType.parseMediaType("application/pdf"));
 	    String filename = chapter.getLoc().substring(0, chapter.getLoc().length()-4)+"_preview.pdf";
+	    ResponseEntity<byte[]> response=null;
+	    byte[] pdf1Bytes=null;
+	    if(chapter.getLoc()!=null)
+	    {
 	    File file = new File(filename);
-	    byte[] pdf1Bytes = Files.readAllBytes(file.toPath());
+	    pdf1Bytes = Files.readAllBytes(file.toPath());
 	    headers.add("content-disposition", "inline;filename=" + filename);
 
 	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-	    ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);
+	    response = new ResponseEntity<byte[]>(pdf1Bytes, headers, HttpStatus.OK);
+	    }
+	    else
+	    {
+	    	response = new ResponseEntity<byte[]>(pdf1Bytes,headers,HttpStatus.NO_CONTENT);
+	    }
+	    
 	    return response;
 	}
 	
@@ -176,7 +188,7 @@ public class ChapterController {
 		Book book = bookService.getBookById(id);
 		service.parseCsv(path, book);
 		book.setChaptersAdded(true);
-		return "index";
+		return "redirect:pubHome";
 	}
 	
 }

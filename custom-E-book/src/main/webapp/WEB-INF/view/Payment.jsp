@@ -21,7 +21,6 @@ body{
 
 </style>
 </head>
-<body >
 	<body background="/images/book1.jpeg">
 <!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
@@ -49,12 +48,17 @@ body{
 <form action="/paymentPage" method="POST">
 <%-- <p>Total price is:${price }</p> --%>
 <%-- <input type="hidden" name ="price" value="${price}"/> --%>
-<input type="radio" name="price" value=${price} checked="checked"> <font size="5" ><b>SoftCopy for ${price}</b></font><br>
-<input type="radio" name="price" value=${hardCopyPrice}><font size="5" ><b>Hard Copy for ${hardCopyPrice}</b></font><br>
-<input type="hidden" name="hardCopyPrice" value="${ hardCopyPrice}"/>
+<div style="margin-left:10%;">
+<h1><b><i>Book Price</i><b></b></h1>
+<hr>
+<input type="radio" name="price" value=${price} checked="checked"> <font size="5" >Price of SoftCopy is: ${price}</font><br>
+<input type="radio" name="price" value=${hardCopyPrice}><font size="5" >Price of HardCopy is: ${hardCopyPrice}</font><br>
 
-<i>(Rs. 0.5/page and 30/- for shipping)</i><br>
-<input  class="btn btn-info" type="submit" value="Buy Now"/>
+<input type="hidden" name="hardCopyPrice" value="${ hardCopyPrice}"/>
+<br>
+<i>(Rs. 0.5/page and 30/- for shipping)</i><br><br><br>
+<input  class="btn btn-info" type="submit" style="margin-left:5%;" value="Buy Now"/>
+</div>
 </form>
 </body>
 </html>

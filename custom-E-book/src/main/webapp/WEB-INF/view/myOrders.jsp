@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.example.demo.ebook.model.payment.Payment"%>
+	pageEncoding="UTF-8" import="com.example.demo.ebook.model.orderedEbook.OrderedEbook"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -20,6 +20,8 @@
  $(document).ready(function() {
 	  $('#example').DataTable();
 	});
+
+
 </script>
 <style>
 body {
@@ -65,7 +67,7 @@ form.example::after {
 </style>
 <title>Orders History</title>
 </head>
-<body>
+<body background="/images/book12.jpg">
 <%-- 	<c:set var="index" scope="page" value="1" /> --%>
 <%-- 	<c:forEach items="${files_list}" var="file"> --%>
 <%-- 		<a href="displayEbook?index=${index}" target="_blank">${file.getName()}</a> --%>
@@ -102,6 +104,7 @@ form.example::after {
 	<table id="example" class="table table-inverse" >
 		<thead >
 			<tr>
+				<th></th>
 				<th>Book Name</th>
 				<th>Recipient Name</th>
 				<th>Type</th>
@@ -111,20 +114,21 @@ form.example::after {
 		</thead>
 		<tbody>
 			<c:set var="index" scope="page" value="1" />
-			<c:forEach items="${payments}" var="payment">
+			<c:forEach items="${orderBooks}" var="orderbook">
 				<tr id="tr-id-${index}" class="tr-class-${index}">
-					<td id="td-id-${index}" class="td-class-${index}">${payment.title}</td>
-					<td id="td-id-${index}" class="td-class-${index}">${payment.name}</td>
+					<td id="td-id-${index}" class="td-class-${index}"></td>
+					<td id="td-id-${index}" class="td-class-${index}">${orderbook.payment.title}</td>
+					<td id="td-id-${index}" class="td-class-${index}">${orderbook.payment.name}</td>
 					<c:choose>
-						<c:when test="${payment.hardCopy}">
+						<c:when test="${orderbook.payment.hardCopy}">
 							<td id="td-id-${index}" class="td-class-${index}">HardCopy</td>
 						</c:when>
 						<c:otherwise>
 							<td id="td-id-${index}" class="td-class-${index}">SoftCopy</td>
 						</c:otherwise>
 					</c:choose>
-					<td id="td-id-${index}" class="td-class-${index}">${payment.purchaseDate}</td>
-					<td id="td-id-${index}" class="td-class-${index}"><a href="displayEbook?index=${index}" target="_blank">preview</a></td>
+					<td id="td-id-${index}" class="td-class-${index}">${orderbook.payment.purchaseDate}</td>
+					<td id="td-id-${index}" class="td-class-${index}"><a href="displayEbook?index=${orderbook.id}" target="_blank">preview</a></td>
 				</tr>
 				<c:set var="index" scope="page" value="${index +1}" />
 			</c:forEach>

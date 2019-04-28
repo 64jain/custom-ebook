@@ -25,7 +25,6 @@ public class Payment {
 	//@Temporal(TemporalType.DATE)
 	private Date purchaseDate;
 	private String title;
-
 	public int getId() {
 		return id;
 	}
@@ -88,7 +87,7 @@ public class Payment {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", name=" + name + ", email=" + email + ", buyer_addr=" + buyer_addr + ", buyer="

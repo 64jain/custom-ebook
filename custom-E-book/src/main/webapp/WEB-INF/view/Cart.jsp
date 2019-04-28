@@ -80,7 +80,7 @@ function deletedata(id)
 </script>
 
 </head>
-<body background="/images/book1.jpeg" >
+<body background="/images/ebook template/e5.jpg" >
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
