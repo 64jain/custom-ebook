@@ -17,6 +17,6 @@ public interface EbookService {
 	int saveEBook(List<Integer> books_id,List<Integer> chapters_id,Buyer buyer);
 	void generateHTMLFromPDF(String filename) throws IOException;
 	String mergePdf(Buyer buyer,boolean preview,String title);
-	 Payment savePaymentContent(String name,String email,Buyer buyer,String price,String addr,String copy_type,String paymentMethod);
+	 Payment savePaymentContent(String name,String email,Buyer buyer,String price,String addr,String copy_type,String paymentMethod,String title);
 	List<Book> findRecommendedBooks(Buyer buyer);
 }

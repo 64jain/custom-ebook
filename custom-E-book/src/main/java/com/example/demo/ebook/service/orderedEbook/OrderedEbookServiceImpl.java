@@ -1,6 +1,7 @@
 package com.example.demo.ebook.service.orderedEbook;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ class OrderedEbookServiceImpl implements OrderedEbookService{
 				List<CustomEBook> ebooks=ebook_service.showContent(buyer);
 				Set<Book> book_set =new HashSet<>();
 				Set<Chapter> chapter_set=new HashSet<>();
+				Set<String>keyword_set=new HashSet<>();
 				String keywords="";
 				int count=0;
 				for(CustomEBook ebook:ebooks)
@@ -55,6 +57,24 @@ class OrderedEbookServiceImpl implements OrderedEbookService{
 					}
 					count=1;
 				}
+				String[] keywordList = keywords.split(",");
+				for (String keyword : keywordList) {
+					keyword_set.add(keyword);
+				}
+				keywords="";
+				count=0;
+				
+				Iterator it=keyword_set.iterator();
+				while(it.hasNext())
+				{
+					if(count==0)
+						keywords=(String)it.next();
+					else
+						keywords=keywords+","+(String)it.next();
+					count=1;
+				}
+				System.out.println(keywords);
+				
 				orderEbook.setKeywords(keywords);	
 				orderEbook.setBookList(book_set);
 				orderEbook.setChapterList(chapter_set);

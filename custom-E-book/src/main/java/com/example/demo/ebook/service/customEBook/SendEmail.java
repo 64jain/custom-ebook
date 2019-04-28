@@ -14,12 +14,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import com.example.demo.ebook.model.payment.Payment;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
 public class SendEmail {
-  public SendEmail(String price,String filename){
+  public SendEmail(Payment payment,String filename){
   final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
   // Get a Properties object
      Properties props = System.getProperties();
@@ -48,10 +51,10 @@ public class SendEmail {
          msg.setFrom(new InternetAddress("kundaliya96@gmail.com"));
          msg.setRecipients(Message.RecipientType.TO, 
                           InternetAddress.parse("kundaliya96@gmail.com",false));
-         msg.setSubject("Buy Item");
+         msg.setSubject("Book purchased: "+payment.getTitle());
        
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Hola!You've purchased your custom-ebook worth Rs"+price+".Thanks for Shopping!!");
+        messageBodyPart.setText("Hola!You've purchased your custom-ebook worth Rs"+payment.getPrice()+".Thanks for Shopping!!");
          Multipart multipart = new MimeMultipart();
 
          // Set text message part

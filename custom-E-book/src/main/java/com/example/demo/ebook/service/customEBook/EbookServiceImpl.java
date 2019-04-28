@@ -37,10 +37,12 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
+import com.example.demo.ebook.model.orderedEbook.OrderedEbook;
 import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.repository.book.BookRepository;
 import com.example.demo.ebook.repository.chapter.ChapterRepository;
 import com.example.demo.ebook.repository.customEBook.EbookRepository;
+import com.example.demo.ebook.repository.orderedEbook.OrderedEbookRepository;
 import com.example.demo.ebook.repository.payment.paymentRepository;
 
 @Service
@@ -55,6 +57,8 @@ public class EbookServiceImpl implements EbookService {
 	EbookRepository ebook_repository;
 	@Autowired
 	paymentRepository payment_repository;
+	@Autowired
+	OrderedEbookRepository orderebook_repository;
 	
 	// CustomEBook ebook;
 	// Chapter chapter;
@@ -100,37 +104,43 @@ public class EbookServiceImpl implements EbookService {
 					}
 				}
 			}
-		
-		List<Payment>payments= payment_repository.findByBuyer(buyer);
-		Set<Integer> payment_set = new HashSet<Integer>();
-		if(payments.size()>0) {
-			for(int i=0;i<payments.size();i++)
-				payment_set.add(payments.get(i).getId());
-			
-			for(int i=0;i<payments.size();i++) {
-				String keywords=payments.get(i).getKeywords();
-				String[] keywordList = keywords.split(",");
-				for (String keyword : keywordList) {
-					List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
-					for (int j = 0; j < books_temp.size(); j++) {
-						int bj = books_temp.get(j).getId();
-						System.out.println("***************************");
-						System.out.println("book for " + keyword + " is" + bj);
-						System.out.println("***************************");
-						Book disabledBook=book_repository.findById(bj).get();
-						if(!disabledBook.isDisabled())
-						{
-							if (books_map.get(bj)!=null )
-								books_map.put(bj, books_map.get(bj) + 1);
-							else
-								books_map.put(bj, 1);
-						}
-						
+	List<OrderedEbook> orderEbooks = orderebook_repository.findByBuyer(buyer);
+	if(orderEbooks.size()>0)
+	{
+		for(int i=0;i<orderEbooks.size();i++)
+		{
+			Set<Book> orderbooks=orderEbooks.get(i).getBookList();
+			Iterator it=orderbooks.iterator();
+			while(it.hasNext())
+			{
+				books_set.add(((Book)(it.next())).getId());
+			}
+		}
+		for(int i=0;i<orderEbooks.size();i++) {
+			String keywords = orderEbooks.get(i).getKeywords();
+			String[] keywordList = keywords.split(",");
+			for (String keyword : keywordList) {
+				List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
+				for (int j = 0; j < books_temp.size(); j++) {
+					int bj = books_temp.get(j).getId();
+					System.out.println("***************************");
+					System.out.println("book for " + keyword + " is" + bj);
+					System.out.println("***************************");
+					Book disabledBook=book_repository.findById(bj).get();
+					if(!disabledBook.isDisabled())
+					{
+						if (books_map.get(bj)!=null )
+							books_map.put(bj, books_map.get(bj) + 1);
+						else
+							books_map.put(bj, 1);
 					}
+					
 				}
+
 			}
 			
-		}
+		}		
+	}
 			if(books_map.size()>0)
 			{
 				for (Integer b : books_map.keySet()) {
@@ -183,7 +193,7 @@ public class EbookServiceImpl implements EbookService {
 	}
 
 	@Override
-	public Payment savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,String paymentMethod) {
+	public Payment savePaymentContent(String name, String email, Buyer buyer, String price, String addr, String copy_type,String paymentMethod,String title) {
 		Payment payment = new Payment();
 		payment.setName(name);
 		payment.setEmail(email);
@@ -195,6 +205,7 @@ public class EbookServiceImpl implements EbookService {
 			payment.setHardCopy(false);
 		payment.setPrice(Double.parseDouble(price));
 		payment.setPayment_method(paymentMethod);
+		payment.setTitle(title);
 		long millis=System.currentTimeMillis();  
 		Date date=new Date(millis);  
 		payment.setPurchaseDate(date);

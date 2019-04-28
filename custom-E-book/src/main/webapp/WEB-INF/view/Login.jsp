@@ -26,6 +26,8 @@
 
 body {
   margin: 0;
+  background-size:cover;
+   background-repeat:no-repeat;
 }
 
 /* Style the header */
@@ -71,6 +73,7 @@ body {
 
 /* Middle column */
 .column.middle {
+margin-top: 1.6%;
   width: 44%;
 }
 
@@ -92,7 +95,7 @@ body {
     
     
 </head>
-<body>
+<body background="/images/grey_bg.jpg">
 <!-- -----------------Displaying error-------------------------------- -->
 <div class="modal fade" id="errorModal" role="dialog">
     <div class="modal-dialog">
@@ -149,20 +152,32 @@ body {
 
 <div class="row">
   <div class="column side" style="padding-left:1.8%;">
-    <h2>Login as Buyer</h2>
-    <p>Login into the website,see and make use of respective books or chapters of your interest!</p>
-     <button type="button" class="btn btn-info" id="myBtn1">Login Buyer</button>
+   <h2 ><center><i>Login as Buyer</i></center></h2>
+   <hr>
+   <br>
+   <br>
+   <p ><font size="4">Login into the website,see and make use of respective books or chapters of your interest!</font></p>
+   <br>
+   <br>
+    <div style="margin-left: 18%;">
+     <button type="button" class="btn btn-info" id="myBtn1">Login Buyer</button></div>
   </div>
   
-  <div class="column middle">
+  <div class="column middle" >
   <div id="image"  style="background-image:url(/images/ebook2.jpg);height:500px;">
   </div>
   </div>
   
   <div class="column side" style="padding-left:0.5%;padding-right:1%;">
-    <h2>Login as Publisher</h2>
-    <p>After login,you can sell your own book and make money out of it!</p>
-  <button type="button" class="btn btn-info" id="myBtn2">Login Publisher</button>
+     <center><h2 ><i>Login as Publisher</i></h2></center>
+     <hr>
+   <br>
+   <br>
+    <p ><font size="4">After login,you can sell your own book and make money out of it!</font></p>
+   <br>
+   <br>
+   <div style="margin-left:27%;">
+  <button type="button" class="btn btn-info" id="myBtn2">Login Publisher</button></div>
   </div>
 </div>
 

@@ -148,20 +148,31 @@ form.example button:hover {
 	<br>
 	<br>
 	<br>
-	
-<div class="container" id="recommendedBooks">
+	<c:set var="error" value="${books}" /> 
+	<c:choose> 
+   <c:when test="${books==null}">
+   
+   </c:when>
+    <c:otherwise> 
+    <script>
+$(document).ready(function(){
 
-			<div class="panel-group" style="width:30%; margin-left:32%;">
-				
-				 <div class="panel panel-info">
-      <div class="panel-heading"><h2 align="center" style="color:red;"><b><i>Books you might like </i></b></h2></div>
-      <c:forEach items="${books}" var="temp">
-      <div class="panel-body" style=" background-color:transparent;"><a href="previewBuyerBook?id=${temp.id}" style="color:dark grey;"><center><b><font size="3">${temp.bookName}</font></b></center></a></div>
-  
-    </c:forEach>
-    </div>
-    
-    	</div>	
+$("#recommendedBooks").show(1000); 
+
+
+});
+</script>
+    </c:otherwise>
+    </c:choose>
+<div class="container" id="recommendedBooks" style="width:30%;display:none;margin-left:32%;">
+    	
+    <ul class="nav nav-pills nav-stacked">
+    <li class="active"><center><b><i><font size="6" color="yellow">Books you might like ...</font></i></b></center></li>
+     <c:forEach items="${books}" var="temp">
+    <li><a href="previewBuyerBook?id=${temp.id}" style="color:dark grey;"><center><b><font size="4">${temp.bookName}</font></b></center></a></li>
+   </c:forEach>
+  </ul>
+
     	</div>
 				<!-- 	<ul class="list-group" style="width:28%;margin-left:35%;" > -->
 				<%--     <li class="list-group-item" style="background-color: transparent;border: 1px solid black;border-radius: 8px;color:white;"><a href="previewBuyerBook?id=${temp.id}" style="color:dark grey;"><center><b><font size="5">${temp.bookName}</font></b></center></a></li> --%>

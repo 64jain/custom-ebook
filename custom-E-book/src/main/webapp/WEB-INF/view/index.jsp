@@ -14,7 +14,7 @@
   <style>
  body{
 
-   background-size:cover;
+   background-size:cover; 
    background-repeat:no-repeat;
 }
 /* override position and transform in 3.3.x */
@@ -40,25 +40,27 @@
 
 .carousel-control.left,.carousel-control.right {background-image:none;}
   </style>
-  <script>
- $('#myCarousel').carousel({
-  interval: 10000
-})
+<!--   <script> -->
+<!--  $('#myCarousel').carousel({ -->
+<!--   interval: 10000 -->
+<!-- }) -->
 
-$('.carousel .item').each(function(){
-  var next = $(this).next();
-  if (!next.length) {
-    next = $(this).siblings(':first');
-  }
-  next.children(':first-child').clone().appendTo($(this));
+<!-- $('.carousel .item').each(function(){ -->
+<!--   var next = $(this).next(); -->
+<!--   if (!next.length) { -->
+<!--     next = $(this).siblings(':first'); -->
+<!--   } -->
+<!--   next.children(':first-child').clone().appendTo($(this)); -->
   
-  if (next.next().length>0) {
-    next.next().children(':first-child').clone().appendTo($(this));
-  }
-  else {
-  	$(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-  }
-});
+<!--   if (next.next().length>0) { -->
+<!--     next.next().children(':first-child').clone().appendTo($(this)); -->
+<!--   } -->
+<!--   else { -->
+<!--   	$(this).siblings(':first').children(':first-child').clone().appendTo($(this)); -->
+<!--   } -->
+<!-- }); -->
+<!-- </script> -->
+<script>
  
 $(document).ready(function(){
 	var res = <%=session.getAttribute("result") %>;
@@ -68,7 +70,7 @@ $(document).ready(function(){
 });
   </script>
 </head>
-<body background="/images/index.jpeg" >
+<body background="/images/ebook template/e5.jpg" >
 <div id="navigation" >
 <!-- navbar area -->
 
@@ -161,35 +163,7 @@ $(document).ready(function(){
 <!-- footer area -->
 <!-- <a href="/regBuyer">register Buyer</a> <br/> -->
 <!-- <a href="/regPublisher">register Publisher</a> <br/> -->
- <h2 style="color:white;"><b>Custom E Books</b></h2> 
-<div class="container">
-<div class="col-md-10 col-md-offset-1">
-<div class="carousel slide" id="myCarousel">
-  <div class="carousel-inner">
-    <div class="item active">
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/angelsdemons.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/harrypotter1.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
-    </div>
-<!--     <div class="item"> -->
-<!--     </div> -->
-    <div class="item">
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/lifeofpi.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/davinci.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/pinnochio.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/twilight.jpg" class="img-responsive"></a></div>
-      <div class="col-md-4"><a href="#"><img src="/images/bookcover/harrypotter1.jpg" class="img-responsive"></a></div>
-    </div>
-    
-  </div>
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-</div>
-</div>
-</div>
+ <center><h1 style="color:white;"><b>Custom E Books</b></h1> </center>
 
 </body>
 </html>

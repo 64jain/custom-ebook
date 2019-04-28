@@ -9,10 +9,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=brick-sign">
 <title>Register</title>
 
     <style>
    * {
+   .w3-lobster {
+  font-family: "Lobster", Sans-serif;
+}
    
   box-sizing: border-box;
 }
@@ -27,6 +32,8 @@
   }
 
 body {
+background-size:cover;
+   background-repeat:no-repeat;
   margin: 0;
 }
 
@@ -146,7 +153,7 @@ body {
     </script>
     
 </head>
-<body>
+<body background="/images/grey_bg.jpg">
 	<!-- Navigation bar -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -175,22 +182,34 @@ body {
 
 <div class="row">
   <div class="column side left">
-    <h2>Register as Buyer</h2>
-    <p>Make your own Customized Ebook with plenty of available collections  </p>
-     <button type="button" class="btn btn-info" id="myBtn1">Register Buyer</button>
+
+   <h2 ><i>Register as Buyer</i></h2>
+ <hr>
+ <br>
+    <p ><font size="4">Make your own Customized Ebook with plenty of available collections  </font></p>
+    <br>
+    <br>
+    <div style="margin-left: 18%;">
+     <button type="button" class="btn btn-info" id="myBtn1" >Register Buyer</button></div>
   </div>
   
   <div class="column middle">
-  <div id="image"  style="background-image:url(/images/ebook1.jpg);height:450px;">
+ <div id="image"  style="background-image:url(/images/ebook1.jpg);height:450px;"> 
   </div>
   </div>
   
   <div class="column side right">
-    <h2>Register as Publisher</h2>
-    <p>Publish your own book and sell them chapterwise as well</p>
-  <button type="button" class="btn btn-info" id="myBtn2">Register Publisher</button>
+  
+      <h2 ><i>Register as Publisher</i></h2>
+  <hr>
+ <br>
+    <p ><font size="4">Publish your own book and sell them chapterwise as well</font></p>
+    <br><br>
+    <div style="margin-left:27%;">
+  <button type="button" class="btn btn-info" id="myBtn2" >Register Publisher</button> </div>
+ 
   </div>
-</div>
+
 
 
 <!-- Modal for buyer -->

@@ -22,6 +22,7 @@ import com.example.demo.ebook.model.book.Book;
 import com.example.demo.ebook.model.buyer.Buyer;
 import com.example.demo.ebook.model.chapter.Chapter;
 import com.example.demo.ebook.model.customEBook.CustomEBook;
+import com.example.demo.ebook.model.orderedEbook.OrderedEbook;
 import com.example.demo.ebook.model.payment.Payment;
 import com.example.demo.ebook.service.customEBook.EbookService;
 import com.example.demo.ebook.service.customEBook.SendEmail;
@@ -142,14 +143,11 @@ public class EbookController {
 		double total=0;
 		@SuppressWarnings("unused")
 		int totalPages=0;
-		String keywords="";
+		
 		for(int i=0;i<list.size();i++)
 		{
 			if(list.get(i).getChapter()==null)
-			{	if(i==0)
-					keywords=list.get(0).getBook().getKeywords();
-				else
-					keywords=keywords+","+list.get(i).getBook().getKeywords();
+			{	
 				total+=list.get(i).getBook().getPrice();
 				totalPages+=list.get(i).getBook().getTotalNoOfPages();
 			}
@@ -162,13 +160,12 @@ public class EbookController {
 		double hardCopyPrice = total+totalPages*0.5 +30;
 		service.mergePdf(buyer, true,"");    //for creating ebook preview
 		map.addAttribute("price", total);
-		map.addAttribute("keywords",keywords);
 		map.addAttribute("hardCopyPrice", hardCopyPrice);
 		return "Payment";
 	}
 	@RequestMapping("/paymentPage")
 	public String paymentPage(ModelMap map,HttpSession session,@RequestParam( value="price",required=false) String price,
-								@RequestParam(value="hardCopyPrice",required=false) String hardCopyPrice,@RequestParam("keywords") String keywords)
+								@RequestParam(value="hardCopyPrice",required=false) String hardCopyPrice)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if(buyer==null)
@@ -177,7 +174,6 @@ public class EbookController {
 		{
 			map.addAttribute("price",price);
 			map.addAttribute("hardCopyPrice",hardCopyPrice);
-			map.addAttribute("keywords",keywords);
 			System.out.println(hardCopyPrice);	
 			System.out.println(price);
 		}
@@ -187,7 +183,7 @@ public class EbookController {
 	}
 	
 	@RequestMapping("/successPayment")
-	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("keywords") String keywords,@RequestParam("paymentMethod")String paymentMethod,@RequestParam("title") String title)
+	public String successPayment(ModelMap map,HttpSession session,@RequestParam("name") String name,@RequestParam("email")String email,@RequestParam("price")String price,@RequestParam("addr")String addr,@RequestParam(value="copy_type",required=false)String copy_type,@RequestParam("paymentMethod")String paymentMethod,@RequestParam("title") String title)
 	{
 		Buyer buyer = (Buyer) session.getAttribute("buyer");
 		if(buyer==null)
@@ -201,12 +197,14 @@ public class EbookController {
 		System.out.println(copy_type);
 		System.out.println(paymentMethod);
 		System.out.println("********************************************************");
-		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod);
+		Payment payment =service.savePaymentContent(name,email,buyer,price,addr,copy_type,paymentMethod,title);
 		
 		String location=service.mergePdf(buyer,false,title);
 		order_service.saveOrder(buyer, payment, location);
 		//String filename="/home/samridhi/mid.pdf";
-		//SendEmail s=new SendEmail(price,filename);
+		if(title==null)
+			title="new_book";
+		SendEmail s=new SendEmail(payment,location);
 		service.deleteContentAfterSave(buyer);
 		map.addAttribute("result", "Email has been sent to the recipient email address!");
 		return "successPayment";
