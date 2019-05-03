@@ -78,30 +78,35 @@ public class EbookServiceImpl implements EbookService {
 			Set<Integer> books_set = new HashSet<Integer>();
 			if(ebooks.size()>0) {
 				for (int i = 0; i < ebooks.size(); i++)
-					books_set.add(ebooks.get(i).getBook().getId());
+					if(ebooks.get(i).getBook()!=null)
+						books_set.add(ebooks.get(i).getBook().getId());
 				for (int i = 0; i < ebooks.size(); i++) {
 					Book bi = ebooks.get(i).getBook();
-					String keywords = bi.getKeywords();
-					String[] keywordList = keywords.split(",");
-					for (String keyword : keywordList) {
-						List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
-						for (int j = 0; j < books_temp.size(); j++) {
-							int bj = books_temp.get(j).getId();
-							System.out.println("***************************");
-							System.out.println("book for " + keyword + " is" + bj);
-							System.out.println("***************************");
-							Book disabledBook=book_repository.findById(bj).get();
-							if(!disabledBook.isDisabled())
-							{
-								if (books_map.get(bj)!=null )
-									books_map.put(bj, books_map.get(bj) + 1);
-								else
-									books_map.put(bj, 1);
+					if(bi!=null)
+					{
+						String keywords = bi.getKeywords();
+						String[] keywordList = keywords.split(",");
+						for (String keyword : keywordList) {
+							List<Book> books_temp = book_repository.findByKeywordsContaining(keyword);
+							for (int j = 0; j < books_temp.size(); j++) {
+								int bj = books_temp.get(j).getId();
+								System.out.println("***************************");
+								System.out.println("book for " + keyword + " is" + bj);
+								System.out.println("***************************");
+								Book disabledBook=book_repository.findById(bj).get();
+								if(!disabledBook.isDisabled())
+								{
+									if (books_map.get(bj)!=null )
+										books_map.put(bj, books_map.get(bj) + 1);
+									else
+										books_map.put(bj, 1);
+								}
+								
 							}
-							
-						}
 
+						}
 					}
+					
 				}
 			}
 	List<OrderedEbook> orderEbooks = orderebook_repository.findByBuyer(buyer);
@@ -110,11 +115,15 @@ public class EbookServiceImpl implements EbookService {
 		for(int i=0;i<orderEbooks.size();i++)
 		{
 			Set<Book> orderbooks=orderEbooks.get(i).getBookList();
-			Iterator it=orderbooks.iterator();
-			while(it.hasNext())
+			if(orderbooks!=null)
 			{
-				books_set.add(((Book)(it.next())).getId());
+				Iterator it=orderbooks.iterator();
+				while(it.hasNext())
+				{
+					books_set.add(((Book)(it.next())).getId());
+				}
 			}
+			
 		}
 		for(int i=0;i<orderEbooks.size();i++) {
 			String keywords = orderEbooks.get(i).getKeywords();

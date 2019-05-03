@@ -148,9 +148,9 @@ form.example button:hover {
 	<br>
 	<br>
 	<br>
-	<c:set var="error" value="${books}" /> 
+	<c:set var="books" value="${books}" /> 
 	<c:choose> 
-   <c:when test="${books==null}">
+   <c:when test="${empty books}">
    
    </c:when>
     <c:otherwise> 

@@ -117,7 +117,6 @@ body{
 								<font color="white"><b>Book Name</b></font>
 							</div></td>
 						<td><div class="card" style="background-color: black;">
-								<font color="white"><b>Price Price</b></font>
 								<font color="white"><b>Price</b></font>
 							</div></td>
 						<td><div class="card" style="background-color: black;">

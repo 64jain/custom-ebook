@@ -181,7 +181,7 @@ margin-top: 2.4%;
 <div class="row">
   <div class="column side left">
 
-   <h2 ><i>Register as Buyer</i></h2>
+   <center><h2 ><i>Register as Buyer</i></h2></center>
  <hr>
  <br>
     <p ><font size="4">Make your own Customized Ebook with plenty of available collections  </font></p>
@@ -198,7 +198,7 @@ margin-top: 2.4%;
   
   <div class="column side right">
   
-      <h2 ><i>Register as Publisher</i></h2>
+     <center> <h2 ><i>Register as Publisher</i></h2></center>
   <hr>
  <br>
     <p ><font size="4">Publish your own book and sell them chapterwise as well</font></p>

@@ -69,8 +69,13 @@ $(document).ready(function(){
 	}
 });
   </script>
+  <script>
+  $(document).ready(function(){
+  $("#stuff").show(1500); 
+  });
+  </script>
 </head>
-<body background="/images/ebook template/e5.jpg" >
+<body background="/images/read_ebook.jpg" >
 <div id="navigation" >
 <!-- navbar area -->
 
@@ -164,6 +169,15 @@ $(document).ready(function(){
 <!-- <a href="/regBuyer">register Buyer</a> <br/> -->
 <!-- <a href="/regPublisher">register Publisher</a> <br/> -->
  <center><h1 style="color:white;"><b>Custom E Books</b></h1> </center>
+ <br>
+ <br>
+ <br>
+ <br><br>
+ <div id="stuff" style="width: 40%;margin-left:4%;display:none;">
+
+ <p><i><font size="5" color="yellow"><b>Buy and Download variety of ebooks </b></font></i></p>
+  <p><i><font size="5" color="pink"><b>Publish and make your own personalised Ebook today!</b></font></i></p>
+ </div>
 
 </body>
 </html>

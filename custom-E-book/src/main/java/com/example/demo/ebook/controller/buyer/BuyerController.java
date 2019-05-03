@@ -79,7 +79,7 @@ public class BuyerController {
 		if(orderedEbooks!=null) {
 			map.addAttribute("orderBooks", orderedEbooks);
 		}
-			return "myOrders";
+			return "myOrders2";
 		
 	}
 	@RequestMapping("/displayEbook")
